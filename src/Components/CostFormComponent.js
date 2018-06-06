@@ -1,30 +1,37 @@
 import React, {Component} from 'react';
+
+
 let cost, title, date, id=0;
 
 const CostForm = ({addCosts}) => {
     id++;
-    return <div>
+    return <form onSubmit={(event) => event.preventDefault({event})}>
         <input type="number"
-            //  onChange={this.handleCostInputChange}
                placeholder="$$"
                ref={node => {
                    cost = node;
-               }}/>
+               }} required/>
         <input type="text"
-            // onChange={this.handleTitleInputChange}
                placeholder="Purpose"
                ref={node => {
                    title = node;
                }}/>
-        <input placeholder="dd/mm/yyyy" ref={node => {
+        <input type="date" placeholder="dd/mm/yyyy"
+               ref={node => {
             date = node;
-        }}/>
-        <button
+        }} required/>
+
+
+
+        <button type="submit"
             onClick=
-                {() => addCosts({title: title.value, cost: cost.value, date: date.value, id: id})}
+                {() => {
+                    (event) => event.preventDefault({event});
+                    if (date.value && cost.value)
+                    addCosts({title: title.value, cost: cost.value, date: date.value, id: id})}}
         >+
         </button>
-    </div>;
+    </form>;
 };
 
 
