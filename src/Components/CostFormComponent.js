@@ -4,7 +4,7 @@ import React, {Component} from 'react';
 let cost, title, date, id=0;
 
 const CostForm = ({addCosts}) => {
-    id++;
+
     return <form onSubmit={(event) => event.preventDefault({event})}>
         <input type="number"
                placeholder="$$"
@@ -25,7 +25,7 @@ const CostForm = ({addCosts}) => {
 
         <button type="submit"
             onClick=
-                {() => {
+                {() => {id++;
                     (event) => event.preventDefault({event});
                     if (date.value && cost.value)
                     addCosts({title: title.value, cost: cost.value, date: date.value, id: id})}}
