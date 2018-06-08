@@ -24,7 +24,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.10",
-    "re-base": "^3.2.3",
     "react-hot-loader": "^4.0.0",
     "style-loader": "^0.20.3",
     "webpack": "^4.1.1",

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
+import { DateTime } from 'luxon';
 
-
-let cost, title, date, id=0;
+let cost, title, date;
 
 const CostForm = ({addCosts}) => {
 
@@ -18,17 +18,17 @@ const CostForm = ({addCosts}) => {
                }}/>
         <input type="date" placeholder="dd/mm/yyyy"
                ref={node => {
-            date = node;
-        }} required/>
+                   date = node;
+               }} required/>
 
 
 
         <button type="submit"
-            onClick=
-                {() => {id++;
-                    (event) => event.preventDefault({event});
-                    if (date.value && cost.value)
-                    addCosts({title: title.value, cost: cost.value, date: date.value, id: id})}}
+                onClick=
+                    {() => {
+                        (event) => event.preventDefault({event});
+                        if (date.value && cost.value)
+                            addCosts({title: title.value, cost: cost.value, date: date.value, id: DateTime.local().toString()})}}
         >+
         </button>
     </form>;
