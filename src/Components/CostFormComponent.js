@@ -1,6 +1,6 @@
 import React from 'react';
 import { DateTime } from 'luxon';
-import {Button, FormControl, FormGroup, Grid,Row, InputGroup} from 'react-bootstrap';
+import {Button, FormControl, FormGroup, InputGroup} from 'react-bootstrap';
 import '../css/custom-styles.css';
 
 let cost, title, date;
