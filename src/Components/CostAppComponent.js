@@ -4,6 +4,7 @@ import CostForm from './CostFormComponent';
 import { Info, DateTime } from 'luxon';
 import {base, app} from '../firebase';
 
+
 let WEEK_DAYS = 7;
 
 class CostApp extends React.Component {
@@ -18,7 +19,7 @@ class CostApp extends React.Component {
         });
         this.cost_listRef1 = base.syncState('total_costs', {
             context: this,
-            // asArray: true,
+            
             state: 'total_costs',
         });
     }
@@ -75,13 +76,19 @@ class CostApp extends React.Component {
 
     render() {
         const {cost_list, total_costs, sorted_list} = this.state;
-
+        if (cost_list.length !== 0) {
+            return (
+                <div><CostForm addCosts={this.addCosts.bind(this)}/>
+                    <CostList cost_list={sorted_list}
+                              deleteCosts={this.deleteCosts.bind(this)}
+                              total_costs={total_costs}/></div>
+            );
+        }
         return (
             <div><CostForm addCosts={this.addCosts.bind(this)}/>
-                <CostList cost_list={sorted_list}
-                          deleteCosts={this.deleteCosts.bind(this)}
-                          total_costs={total_costs}/></div>
+                </div>
         );
+
     }
 }
 

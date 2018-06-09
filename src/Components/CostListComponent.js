@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { DateTime } from 'luxon';
-import ReactDOM from 'react-dom';
+
 
 //representational component for cost list;
 const CostList = ({cost_list, deleteCosts, total_costs}) => {

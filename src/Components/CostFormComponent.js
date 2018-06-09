@@ -1,37 +1,43 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { DateTime } from 'luxon';
+import {Button, FormControl, FormGroup, Grid,Row, InputGroup} from 'react-bootstrap';
+import '../css/custom-styles.css';
 
 let cost, title, date;
 
+
 const CostForm = ({addCosts}) => {
 
-    return <form onSubmit={(event) => event.preventDefault({event})}>
-        <input type="number"
+    return <FormGroup className="d-inline py-3 px-3"
+                      onSubmit={(event) => event.preventDefault({event})}>
+        <InputGroup bsClass="custom-input-group" className="d-inline">
+        <FormControl type="number"
                placeholder="$$"
-               ref={node => {
+               inputRef={node => {
                    cost = node;
                }} required/>
-        <input type="text"
+        <FormControl className="col-md-3" type="text"
                placeholder="Purpose"
-               ref={node => {
+               inputRef={node => {
                    title = node;
                }}/>
-        <input type="date" placeholder="dd/mm/yyyy"
-               ref={node => {
+       <FormControl type="date" placeholder="dd/mm/yyyy"
+               inputRef={node => {
                    date = node;
                }} required/>
 
 
-
-        <button type="submit"
+        <Button type="submit"
                 onClick=
                     {() => {
                         (event) => event.preventDefault({event});
                         if (date.value && cost.value)
                             addCosts({title: title.value, cost: cost.value, date: date.value, id: DateTime.local().toString()})}}
         >+
-        </button>
-    </form>;
+        </Button>
+
+        </InputGroup>
+    </FormGroup>;
 };
 
 
