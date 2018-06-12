@@ -22,29 +22,24 @@ class CostApp extends React.Component {
     }
 
     componentWillUnmount() {
-
         base.removeBinding(this.cost_listRef);
         base.removeBinding(this.cost_listRef1);
     }
 
     addCosts = item => {
-        console.log( "console" , item);
         let temp_list;
         if ((this.state.sorted_list !== null) && (this.state.sorted_list != undefined)
         && this.state.sorted_list !== 'Null') {
              temp_list = this.state.sorted_list;
-            console.log("yes", temp_list);
         }else{temp_list={};}
 
         let dt = item.date.split('-');
-        console.log("dt", dt);
 
         item.date = DateTime.local(+dt[0],
             +dt[1], +dt[2]);
+        console.log(item.date);
 
-        console.log(item.date, "!!!!!!!!!");
         if (!(temp_list[item.date.year])) {
-            console.log("No");
             temp_list[item.date.year]={}
         }
         if (!(temp_list[item.date.year][item.date.month])) {
@@ -57,13 +52,6 @@ class CostApp extends React.Component {
 
         (temp_list[item.date.year][item.date.month][item.date.day]).push(item);
 
-
-        console.log("temp_list ", temp_list);
-
-        for (let i in temp_list) {
-            console.log("i : ", temp_list[i]);
-        }
-
         this.setState({total_costs: +this.state.total_costs + eval(item.cost),
             sorted_list: temp_list
         });
@@ -72,20 +60,19 @@ class CostApp extends React.Component {
     deleteCosts = (year, month, day, id, cost) => {
          console.log("delete cost", cost);
          let temp_list = this.state.sorted_list;
-        temp_list[year][month][day] = temp_list[year][month][day].filter(i => i.id !== id);
-        this.setState({total_costs: this.state.total_costs-cost,
+         temp_list[year][month][day] = temp_list[year][month][day].filter(i => i.id !== id);
+         this.setState({total_costs: this.state.total_costs-cost,
             sorted_list: temp_list});
     };
 
 
     render() {
         const {total_costs, sorted_list} = this.state;
-
-            return (
-                <div><CostForm addCosts={this.addCosts.bind(this)}/>
-                    <CostList cost_list={sorted_list}
-                              deleteCosts={this.deleteCosts.bind(this)}
-                              total_costs={total_costs}/></div>
+        return (
+            <div><CostForm addCosts={this.addCosts.bind(this)}/>
+                <CostList cost_list={sorted_list}
+                          deleteCosts={this.deleteCosts.bind(this)}
+                          total_costs={total_costs}/></div>
             );
 
     }

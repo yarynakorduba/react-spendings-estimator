@@ -2,7 +2,6 @@
     display: inline-flex;
 }
 
-.cards:nth-child(4n+2) {
-    padding-bottom: 100px;
+.cards:nth-child(4n+5) {
     clear:both;
 }

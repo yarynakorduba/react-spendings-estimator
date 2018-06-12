@@ -4,12 +4,17 @@ import {Button, FormControl, FormGroup, InputGroup} from 'react-bootstrap';
 import '../css/custom-styles.css';
 // import { Info, DateTime } from 'luxon';
 
-let cost, title, date;
+let cost, title, date, validDate;
 
 
 const CostForm = ({addCosts}) => {
-    var invalid = ((cost && cost.value <= 0) || (!date));
-    console.log("c,jfvk,fvdfkvj ", DateTime.utc().toFormat('yyyy-MM-dd'));
+    function handleDateChange({target}) {
+        console.log(DateTime.utc(), "in date ", date.value);
+        if (DateTime.fromSQL(target.value) > DateTime.utc()) {
+            validDate = false;
+            console.log("invalid");
+        }else{validDate=true;}
+    }
     return <FormGroup className="d-inline py-3 px-3"
                       onSubmit={(event) => event.preventDefault({event})}>
         <InputGroup bsClass="custom-input-group" className="d-inline">
@@ -23,13 +28,15 @@ const CostForm = ({addCosts}) => {
                inputRef={node => {
                    title = node;
                }}/>
-       <FormControl type="date" placeholder="dd/mm/yyyy" max={DateTime.utc().toFormat('yyyy-MM-dd')}
-               inputRef={node => {
+       <FormControl bsStyle={validDate ? "danger" : "none"}
+           type="date" placeholder="dd/mm/yyyy" max={DateTime.utc().toFormat('yyyy-MM-dd')}
+                    onChange={handleDateChange}
+                    inputRef={node => {
                    date = node;
                }} required/>
 
 
-        <Button type="submit" disabled={invalid}
+        <Button type="submit"
                 onClick=
                     {() => {
                         (event) => event.preventDefault({event});
