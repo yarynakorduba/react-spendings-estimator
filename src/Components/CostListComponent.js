@@ -1,8 +1,6 @@
-import React, {Component} from 'react';
-import { DateTime } from 'luxon';
+import React from 'react';
 import {Panel, Button} from 'react-bootstrap';
 import '../css/custom-styles.css';
-
 
 //representational component for cost list;
 const CostList = ({cost_list, deleteCosts, total_costs}) => {
@@ -25,7 +23,7 @@ const CostList = ({cost_list, deleteCosts, total_costs}) => {
 };
 
 const MonthList = ({cost_list, item, i, deleteCosts}) => {
-    return <Panel className="col-md-3 px-2 cards" key={i}>
+    return <Panel className="col-md-3 col-xs-3 px-2 cards" key={i}>
         <h4>Month {i}</h4>
         {Object.keys(cost_list[item][i]).map((el) => {
             if (el) {

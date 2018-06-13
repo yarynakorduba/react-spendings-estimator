@@ -1,14 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import CostList from './CostListComponent';
 import CostForm from './CostFormComponent';
 import { Info, DateTime } from 'luxon';
-import {base, app} from '../firebase';
+import {base} from '../firebase';
 
 class CostApp extends React.Component {
-    cost_listRef;
-    cost_listRef1;
     state = {total_costs: 0, sorted_list:{}};
-
 
     componentDidMount() {
         this.cost_listRef = base.syncState('sorted_list', {
@@ -26,18 +23,14 @@ class CostApp extends React.Component {
         base.removeBinding(this.cost_listRef1);
     }
 
-    addCosts = item => {
+    addCosts = (item) => {
         let temp_list;
         if ((this.state.sorted_list !== null) && (this.state.sorted_list != undefined)
         && this.state.sorted_list !== 'Null') {
              temp_list = this.state.sorted_list;
         }else{temp_list={};}
 
-        let dt = item.date.split('-');
-
-        item.date = DateTime.local(+dt[0],
-            +dt[1], +dt[2]);
-        console.log(item.date);
+        item.date = DateTime.fromSQL(item.date);
 
         if (!(temp_list[item.date.year])) {
             temp_list[item.date.year]={}
@@ -69,12 +62,11 @@ class CostApp extends React.Component {
     render() {
         const {total_costs, sorted_list} = this.state;
         return (
-            <div><CostForm addCosts={this.addCosts.bind(this)}/>
+            <div><CostForm addCosts={this.addCosts}/>
                 <CostList cost_list={sorted_list}
-                          deleteCosts={this.deleteCosts.bind(this)}
+                          deleteCosts={this.deleteCosts}
                           total_costs={total_costs}/></div>
             );
-
     }
 }
 
