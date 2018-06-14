@@ -1,21 +1,14 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import CostApp from './Components/CostAppComponent';
+import React from "react"
+import ReactDOM from "react-dom"
+import Layout from "./Components/Layout"
 
-class App extends React.Component {
-    render() {
-        return (
-            <div className="container text-center">
-                <h1>My Cost App</h1>
-                <CostApp/>
-            </div>
-        );
-    }
-}
+const App = () => (
+  <div className="container text-center">
+    <h1>My Cost App</h1>
+    <Layout />
+  </div>
+)
 
-ReactDOM.render(
-<App />,
-document.getElementById('app')
-);
+ReactDOM.render(<App />, document.getElementById("app"))
 
-module.hot.accept();
+module.hot.accept()

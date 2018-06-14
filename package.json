@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "luxon": "^0.5.5",
-    "moment": "^2.22.2",
+    "ramda": "^0.25.0",
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-dates": "^16.7.0",
