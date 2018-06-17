@@ -1,69 +1,79 @@
-import React from "react"
-import { Panel, Button } from "react-bootstrap"
+import React, {Fragment} from "react"
 import "../css/custom-styles.css"
-import { compose, filter, identity, map, keys, path, sum } from "ramda"
+import {compose, sum, pipe,
+    map, keys, path, groupBy, reverse, sortBy, reduceRight, add, prop} from "ramda"
+import {v1} from 'react-native-uuid'
+import {getMonth, getDate, getDay, getYear, format, addMonths} from "date-fns";
 
-const Calendar = ({ cost_list, deleteCosts, total_costs }) =>
-  //prettier-ignore
-  cost_list === "Null" ? "No item yet" : (
-    <div>
-      <h3>Total costs spent: {total_costs || "..."}</h3>
-      {compose(
-        map(item => (
-          <Panel bsStyle="info" className="h-100" key={item}>
-            <Panel.Heading>
-              <Panel.Title componentClass="h2">Year {item}</Panel.Title>
-            </Panel.Heading>
-            <Panel.Body>
-              {compose(
-                map(i => <MonthList key={i} cost_list={cost_list} item={item} i={i} deleteCosts={deleteCosts} />),
-                keys,
-                path([item])
-              )(cost_list)}
-            </Panel.Body>
-          </Panel>
-        )),
-        keys
-      )(cost_list)}
-    </div>
-  )
+const sortByDates =sortBy(prop("date"));
+const groupByDates = pipe(
+    groupBy(({date}) => getYear(date)),
+    map(groupBy(({date}) => getMonth(date))),
+    map(map(groupBy(({date}) => getDate(date))))
+);
+// const sumByDates = pipe(
+//     groupByDates(),
+//     reduceRight(add, 0, )
+// )
 
-const MonthList = ({ cost_list, item, i, deleteCosts }) => (
-  <Panel className="col-md-3 col-xs-3 px-2 cards" key={i}>
-    <h4>Month {i}</h4>
-    {compose(
-      map(el => <DayList key={el} cost_list={cost_list} item={item} i={i} el={el} deleteCosts={deleteCosts} />),
-      filter(identity),
-      keys,
-      path([item, i])
-    )(cost_list)}
-  </Panel>
-)
+const Calendar = ({cost_list, deleteCosts, total_costs}) =>
 
-const DayList = ({ cost_list, item, i, el, deleteCosts }) => (
-  <Panel key={el}>
-    <Panel.Heading>
-      <Panel.Title componentClass="h5">Day {el}</Panel.Title>
-    </Panel.Heading>
-    {compose(
-      map(({ title, id, cost }) => (
-        <div key={id} className="py-2">
-          {cost}$ {title ? `(Purpose: ${title})` : " "}
-          <Button bsStyle="link" bsSize="xs" onClick={() => deleteCosts(item, i, el, id, cost)}>
-            x
-          </Button>
-        </div>
-      )),
-      filter(identity),
-      path([item, i, el])
-    )(cost_list)}
-    Total:{" "}
-    {//prettier-ignore
-    compose(
-        sum, 
-        map(index => Number(cost_list[item][i][el][index].cost)), 
-        keys, path([item, i, el]))(cost_list)}$
-  </Panel>
-)
+    cost_list === "Null" ? "No item yet" : (
+        <Fragment>
+            <div className="container">
+                <h3>Total costs spent: {total_costs || "..."}</h3>
+                {compose(
 
-export default Calendar
+                    map(year => <div className="container__year" key={v1()}>
+                        <div className="container__heading--small">{year}</div>
+                        {compose(
+                            map(month => <div className="container__month" key={v1()}>
+                                <div className="container__heading--small">
+                                    {format(addMonths(new Date(month), 1), "MMMM")}
+                                </div>
+                                {compose(
+                                    map(day => <div className="container__day" key={v1()}>
+                                        <div className="container__heading--small">
+                                            {day},
+                                            {format(getDay(new Date(year, month, day)),
+                                                "ddd")}
+
+                                                </div>
+                                        {compose(
+                                            map(
+                                                (item) =>
+                                                    <div className="container__spending" key={v1()}>
+                                                        {groupByDates(cost_list)[year][month][day][item].cost}
+                                                        {groupByDates(cost_list)[year][month][day][item].title} $
+                                                    <button className="item__button" onClick={() => deleteCosts(groupByDates(cost_list)[year][month][day][item].id,
+                                                        groupByDates(cost_list)[year][month][day][item].cost)}>x</button>
+                                                    </div>
+                                            ),
+                                            reverse(),
+                                            keys,
+                                            path([year, month, day])
+                                        )(groupByDates(cost_list))
+                                        }
+                                    </div>),
+                                    reverse(),
+                                    keys,
+                                    path([year, month])
+                                )(groupByDates(cost_list))
+                                }
+                            </div>),
+                            reverse(),
+                            keys,
+                            path([year]))(groupByDates(cost_list))
+                        }
+                    </div>),
+
+                    sortByDates(),
+                    reverse(),
+                    keys,
+                    path([])
+                )(groupByDates(cost_list))}
+            </div>
+        </Fragment>
+    );
+
+export default Calendar;

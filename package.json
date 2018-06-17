@@ -24,9 +24,11 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.10",
+    "date-fns": "^1.29.0",
     "re-base": "^3.2.3",
     "react-hot-loader": "^4.0.0",
     "style-loader": "^0.20.3",
+    "uuid": "^3.2.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.11",
     "webpack-dev-server": "^3.1.1"
@@ -37,6 +39,7 @@
     "react": "^16.4.0",
     "react-bootstrap": "^0.32.1",
     "react-dates": "^16.7.0",
-    "react-dom": "^16.4.0"
+    "react-dom": "^16.4.0",
+    "react-native-uuid": "^1.4.9"
   }
 }

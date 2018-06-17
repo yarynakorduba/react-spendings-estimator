@@ -1,7 +1,65 @@
-.custom-input-group {
-    display: inline-flex;
+.container {
+    text-align: center;
+    padding: 2%;
 }
 
-.cards:nth-child(4n+5) {
-    clear:both;
+.container__input {
+    font-size: 1rem;
+    margin: auto;
 }
+
+.container__input:last-child {
+    border-top-right-radius: 20%;
+    border-bottom-right-radius: 20%;
+    background: rgba(19, 65, 191, 0.65);
+    color: white;
+}
+
+.container__year {
+    text-align: left;
+    background: whitesmoke;
+    margin: 3%;
+}
+
+.container__month {
+    background: rgba(221, 160, 221, 0.23);
+    width: 20%;
+    margin: 0 2.5% 2% 2.5%;
+    display: inline-grid;
+}
+
+.container__heading--small {
+    height: fit-content;
+    text-align: center;
+    display: block;
+    margin: 5%;
+    margin-bottom: 1%;
+    padding-top: 1%;
+    font-weight: bold;
+}
+
+.container__day {
+    display: block;
+    background: rgba(126, 166, 221, 0.28);
+    padding: 2%;
+    margin: 5%;
+    text-align: left;
+    float: left;
+}
+
+.container__spending {
+    margin: 5%;
+}
+
+.item__button {
+    float: right;
+    border-radius: 100%;
+    background: rgba(169, 169, 169, 0.84);
+    border: 2px solid whitesmoke;
+    color: whitesmoke;
+}
+
+.item__button:hover {
+    background: rgba(169, 169, 169, 0.57);
+}
+

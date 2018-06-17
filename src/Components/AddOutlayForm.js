@@ -1,6 +1,6 @@
-import React from "react"
+import React, {Fragment} from "react"
 import { DateTime } from "luxon"
-import { Button, FormControl, InputGroup } from "react-bootstrap"
+import { parse, getYear, getMonth, getDate, isFuture, format } from 'date-fns'
 import "../css/custom-styles.css"
 
 
@@ -12,41 +12,42 @@ import "../css/custom-styles.css"
     description: type String
   }
 */
+var date_invalid, cost_invalid;
+
+
+
 
 class AddOutlayForm extends React.Component {
   state = {
     date: "",
     cost: 0,
-    title: ""
-  }
+    title: "",
+  };
 
-  handleDateChange = e => {
-    if (DateTime.fromSQL(e.target.value) > DateTime.utc()) {
-      alert("The given date cannot be in the future.")
-      this.setState({ date: "" })
-    } else {
-      this.setState({ date: e.target.value })
-    }
-  }
+  handleDateChange = ({ target: { value } }) => {
+      date_invalid = isFuture(parse(value));
+      this.setState({ date: date_invalid ? '' : format(parse(value), "YYYY-MM-DD")})
+  };
 
   handleCostChange = ({ target: { value } }) => {
-    if (value < 0) alert("The given cost amount cannot be of negative value.")
+    cost_invalid = (value < 0);
     this.setState({ cost: value < 0 ? 0 : value })
-  }
+  };
 
-  handlePurposeChange = e => {
+  handlePurposeChange = ({ target: { value } }) => {
     this.setState({ title: e.target.value })
-  }
+  };
 
   render() {
-    const { date, title, cost } = this.state
-    const { addCosts } = this.props
+    const { date, title, cost } = this.state;
+    const { addCosts } = this.props;
 
     return (
+        <Fragment>
       <form
-        className="d-inline py-3 px-3"
+        className="container__form"
         onSubmit={ev => {
-          ev.preventDefault()
+          ev.preventDefault();
 
           if (date && cost) {
             addCosts({
@@ -58,17 +59,19 @@ class AddOutlayForm extends React.Component {
           }
         }}
       >
-        <InputGroup bsClass="custom-input-group" className="d-inline">
-          <FormControl type="number" min="0" placeholder="$$" onChange={this.handleCostChange} value={cost} required />
-          <FormControl
-            className="col-md-3"
+          <input type="number"
+                 className="container__input"
+                 min="0" placeholder="$$"
+                 onChange={this.handleCostChange} value={cost} required />
+          <input
+            className="container__input"
             type="text"
             placeholder="Purpose"
             onChange={this.handlePurposeChange}
             value={title}
           />
-          <FormControl
-            max={DateTime.utc().toFormat("yyyy-MM-dd")}
+          <input className="container__input"
+            max={format(new Date(),"YYYY-MM-DD")}
             type="date"
             placeholder="dd/mm/yyyy"
             onChange={this.handleDateChange}
@@ -76,9 +79,12 @@ class AddOutlayForm extends React.Component {
             required
           />
 
-          <Button type="submit">+</Button>
-        </InputGroup>
+          <button type="submit" className="container__input">+</button>
       </form>
+            <div className="error-msg" style={date_invalid ? {opacity: 1 }: {opacity: 0}}>Date should be in the past</div>
+            <div className="error-msg" style={cost_invalid ? {opacity: 1 }: {opacity: 0}}>Costs should be greater than 0</div>
+
+          </Fragment>
     )
   }
 }
