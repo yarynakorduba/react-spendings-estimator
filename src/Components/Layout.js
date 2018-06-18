@@ -1,19 +1,12 @@
 import React from "react";
 import Calendar from "./Calendar";
 import AddOutlayForm from "./AddOutlayForm";
-import { parse, getYear, getMonth, getDate } from 'date-fns';
 import { base } from "../firebase";
-import {compose, filter, groupBy, prop, keys, map, path} from "ramda";
+import {filter} from "ramda";
 import {v1} from "react-native-uuid";
 
 class Layout extends React.Component {
   state = { total_costs: 0, sorted_list: [] };
-
-    grouping() {
-        return groupBy(function (item) {
-            return getMonth(parse(item.date)) < 2 ? "A" : "B";
-        });
-    }
 
 
   componentDidMount() {
@@ -49,7 +42,6 @@ class Layout extends React.Component {
 
   deleteCosts = (id, cost) => {
     let temp_list = this.state.sorted_list;
-    console.log();
     temp_list = filter(i => i.id !== id, temp_list);
       this.setState({total_costs: this.state.total_costs - cost,
       sorted_list: temp_list

@@ -1,7 +1,6 @@
 import React, {Fragment} from "react"
-import { DateTime } from "luxon"
-import { parse, getYear, getMonth, getDate, isFuture, format } from 'date-fns'
-import "../css/custom-styles.css"
+import { parse, isFuture, format } from 'date-fns'
+import {v1} from "react-native-uuid";
 
 
 /*
@@ -19,14 +18,14 @@ var date_invalid, cost_invalid;
 
 class AddOutlayForm extends React.Component {
   state = {
-    date: "",
+    date: format(new Date(), "YYYY-MM-DD"),
     cost: 0,
     title: "",
   };
 
   handleDateChange = ({ target: { value } }) => {
       date_invalid = isFuture(parse(value));
-      this.setState({ date: date_invalid ? '' : format(parse(value), "YYYY-MM-DD")})
+      this.setState({ date: date_invalid ? '' : format(new Date(value), "YYYY-MM-DD")})
   };
 
   handleCostChange = ({ target: { value } }) => {
@@ -35,7 +34,7 @@ class AddOutlayForm extends React.Component {
   };
 
   handlePurposeChange = ({ target: { value } }) => {
-    this.setState({ title: e.target.value })
+    this.setState({ title: value })
   };
 
   render() {
@@ -48,13 +47,12 @@ class AddOutlayForm extends React.Component {
         className="container__form"
         onSubmit={ev => {
           ev.preventDefault();
-
           if (date && cost) {
             addCosts({
               title: title,
               cost: cost,
               date: date,
-              id: DateTime.local().toString() //TODO: fix it
+              id: v1()
             })
           }
         }}
@@ -78,12 +76,10 @@ class AddOutlayForm extends React.Component {
             value={date}
             required
           />
-
           <button type="submit" className="container__input">+</button>
       </form>
             <div className="error-msg" style={date_invalid ? {opacity: 1 }: {opacity: 0}}>Date should be in the past</div>
             <div className="error-msg" style={cost_invalid ? {opacity: 1 }: {opacity: 0}}>Costs should be greater than 0</div>
-
           </Fragment>
     )
   }

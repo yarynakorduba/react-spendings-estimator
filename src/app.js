@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOM from "react-dom"
 import Layout from "./Components/Layout"
+import "./css/custom-styles.css"
 
 const App = () => (
   <div className="container">
