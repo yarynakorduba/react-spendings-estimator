@@ -1,7 +1,6 @@
 import React, {Fragment} from "react"
-import { parse, isFuture, format } from 'date-fns'
+import { parse, isPast, format} from 'date-fns'
 import {v1} from "react-native-uuid";
-
 
 /*
   TODO
@@ -11,26 +10,24 @@ import {v1} from "react-native-uuid";
     description: type String
   }
 */
-var date_invalid, cost_invalid;
-
-
-
+var date_invalid, amount_invalid;
 
 class AddOutlayForm extends React.Component {
   state = {
-    date: format(new Date(), "YYYY-MM-DD"),
-    cost: 0,
+    date: new Date(),
+    amount: 0,
     title: "",
   };
 
   handleDateChange = ({ target: { value } }) => {
-      date_invalid = isFuture(parse(value));
-      this.setState({ date: date_invalid ? '' : format(new Date(value), "YYYY-MM-DD")})
+      date_invalid = !isPast(parse(value));
+      this.setState({ date: date_invalid ? new Date():
+              value})
   };
 
   handleCostChange = ({ target: { value } }) => {
-    cost_invalid = (value < 0);
-    this.setState({ cost: value < 0 ? 0 : value })
+    amount_invalid = (value < 0);
+    this.setState({ amount: value < 0 ? 0 : value })
   };
 
   handlePurposeChange = ({ target: { value } }) => {
@@ -38,8 +35,8 @@ class AddOutlayForm extends React.Component {
   };
 
   render() {
-    const { date, title, cost } = this.state;
-    const { addCosts } = this.props;
+    const { date, title, amount } = this.state;
+    const { addOutlay } = this.props;
 
     return (
         <Fragment>
@@ -47,11 +44,11 @@ class AddOutlayForm extends React.Component {
         className="container__form"
         onSubmit={ev => {
           ev.preventDefault();
-          if (date && cost) {
-            addCosts({
+          if (date && amount) {
+            addOutlay({
               title: title,
-              cost: cost,
-              date: date,
+              amount: amount,
+              date: format(date, "YYYY-MM-DD"),
               id: v1()
             })
           }
@@ -60,7 +57,7 @@ class AddOutlayForm extends React.Component {
           <input type="number"
                  className="container__input"
                  min="0" placeholder="$$"
-                 onChange={this.handleCostChange} value={cost} required />
+                 onChange={this.handleCostChange} value={amount} required />
           <input
             className="container__input"
             type="text"
@@ -73,13 +70,13 @@ class AddOutlayForm extends React.Component {
             type="date"
             placeholder="dd/mm/yyyy"
             onChange={this.handleDateChange}
-            value={date}
+            value={format(date, "YYYY-MM-DD")}
             required
           />
           <button type="submit" className="container__input">+</button>
       </form>
             <div className="error-msg" style={date_invalid ? {opacity: 1 }: {opacity: 0}}>Date should be in the past</div>
-            <div className="error-msg" style={cost_invalid ? {opacity: 1 }: {opacity: 0}}>Costs should be greater than 0</div>
+            <div className="error-msg" style={amount_invalid ? {opacity: 1 }: {opacity: 0}}>Amount should be greater than 0</div>
           </Fragment>
     )
   }

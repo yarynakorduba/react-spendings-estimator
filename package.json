@@ -28,7 +28,6 @@
     "re-base": "^3.2.3",
     "react-hot-loader": "^4.0.0",
     "style-loader": "^0.20.3",
-  //  "uuid": "^3.2.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.11",
     "webpack-dev-server": "^3.1.1"
@@ -36,7 +35,6 @@
   "dependencies": {
     "ramda": "^0.25.0",
     "react": "^16.4.0",
-   // "react-dates": "^16.7.0",
     "react-dom": "^16.4.0",
     "react-native-uuid": "^1.4.9"
   }
