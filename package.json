@@ -24,7 +24,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.10",
-    "date-fns": "^1.29.0",
     "re-base": "^3.2.3",
     "react-hot-loader": "^4.0.0",
     "style-loader": "^0.20.3",
@@ -33,6 +32,7 @@
     "webpack-dev-server": "^3.1.1"
   },
   "dependencies": {
+    "date-fns": "^2.0.0-alpha.10",
     "ramda": "^0.25.0",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",

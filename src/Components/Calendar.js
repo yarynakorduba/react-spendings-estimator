@@ -1,65 +1,120 @@
-import React, {Fragment} from "react"
-import {compose, map, keys, path, reverse, sortBy, prop} from "ramda"
-import {v1} from 'react-native-uuid'
-import {format} from "date-fns";
+import React from "react"
+import { compose, map, keys, path, reverse, sortBy, prop, tap, sum, filter } from "ramda"
+import { v1 } from "react-native-uuid"
+import {
+  format,
+  isSameYear,
+  isSameMonth,
+  isSameDay,
+  isWithinInterval,
+  startOfDay,
+  startOfMonth,
+  startOfYear,
+  endOfDay,
+  endOfMonth,
+  endOfYear
+} from "date-fns"
 
-const Calendar = ({cost_list, deleteOutlay, amountsForPeriods}) =>
-    !(cost_list) ? null : (
-        <Fragment>
-            <div className="container">
-                <h3>Total amount spent: {prop("total", amountsForPeriods) || "..."}</h3>
-                {compose(
-                    map(year => <div className="container__year" key={v1()}>
-                        <div className="container__heading--small">{year}&nbsp;
-                            ({amountsForPeriods[year]}$)</div>
-                        {compose(
-                            map((month) => <div className="container__month" key={v1()}>
-                                <div className="container__heading--small">
-                                    {format(new Date(1, month, 1), "MMMM")}&nbsp;
-                                    ({amountsForPeriods[format(new Date(year, month),
-                                    "YYYY-MM")]}$)
-                                </div>
-                                {compose(
-                                    map(day => <div className="container__day" key={v1()}>
-                                        <div className="container__heading--small">
-                                            {day},
-                                            {format(new Date(year, month, day), "ddd")}&nbsp;
-                                                ({amountsForPeriods[format(new Date(year, month, day),
-                                            "YYYY-MM-DD")]}$)
-                                                </div>
-                                        {compose(
-                                            map(
-                                                (item) =>
-                                                    <div className="container__spending" key={v1()}>
-                                                        {cost_list[year][month][day][item].amount}
-                                                        $&nbsp;{cost_list[year][month][day][item].title}
-                                                    <button className="item__button" onClick={() =>
-                                                        deleteOutlay(cost_list[year][month][day][item].id)}>x</button>
-                                                    </div>
-                                            ),
-                                            reverse(),
-                                            keys,
-                                            path([year, month, day])
-                                        )(cost_list)
-                                        }
+const Outlay = ({ amount, title, id, onDeleteOutlay }) => (
+  <div className="container__spending" key={v1()}>
+    {amount}
+    $&nbsp;{title}
+    <button className="item__button" onClick={() => onDeleteOutlay(id)}>
+      x
+    </button>
+  </div>
+)
 
-                                    </div>),
-                                    reverse(),
-                                    keys,
-                                    path([year, month])
-                                )(cost_list)
-                                }
-                            </div>),
-                            reverse(),
-                            keys,
-                            path([year]))(cost_list)
-                        }
-                    </div>),
-                    sortBy(prop("date")),
-                    reverse(),
-                    keys)(cost_list)}
-            </div>
-        </Fragment>
-    );
+const Day = ({ date, titleLabel, children }) => (
+  <div className="container__day" key={v1()}>
+    <div className="container__heading--small">
+      {format(date, "d, eee")}&nbsp; ({titleLabel}$)
+    </div>
+    {children}
+  </div>
+)
 
-export default Calendar;
+const Month = ({ date, titleLabel, children }) => (
+  <div className="container__month" key={v1()}>
+    <div className="container__heading--small">
+      {format(date, "MMMM")}&nbsp; ({titleLabel}$)
+    </div>
+    {children}
+  </div>
+)
+
+const Year = ({ year, titleLabel, children }) => (
+  <div className="container__year" key={v1()}>
+    <div className="container__heading--small">
+      {year}&nbsp; ({titleLabel}$)
+    </div>
+    {children}
+  </div>
+)
+
+//prettier-ignore
+const getAmountByInterval = interval =>  compose(
+  sum,
+  map(prop("amount")),
+  filter(({ date }) => isWithinInterval(date, interval))
+)
+
+const getTotalAmount = getAmountByInterval({ start: new Date(0), end: new Date() })
+const getAmountByYear = date => getAmountByInterval({ start: startOfYear(date), end: endOfYear(date) })
+const getAmountByMonth = date => getAmountByInterval({ start: startOfMonth(date), end: endOfMonth(date) })
+const getAmountByDay = date => getAmountByInterval({ start: startOfDay(date), end: endOfDay(date) })
+
+const Calendar = ({ cost_list, rawData, deleteOutlay }) => {
+  return !cost_list ? null : (
+    <div className="container">
+      <h3>Total amount spent: {getTotalAmount(rawData) || "..."}$</h3>
+
+      {compose(
+        map(year => {
+          const date = new Date(year)
+
+          return (
+            <Year year={year} titleLabel={getAmountByYear(date)(rawData)}>
+              {compose(
+                map(month => {
+                  const date = new Date(year, month)
+                  return (
+                    <Month date={date} titleLabel={getAmountByMonth(date)(rawData)}>
+                      {compose(
+                        map(day => {
+                          const date = new Date(year, month, day)
+                          return (
+                            <Day date={date} titleLabel={getAmountByDay(date)(rawData)}>
+                              {compose(
+                                map(({ amount, id, title }) => (
+                                  <Outlay amount={amount} id={id} title={title} onDeleteOutlay={deleteOutlay} />
+                                )),
+                                reverse(),
+                                path([year, month, day])
+                              )(cost_list)}
+                            </Day>
+                          )
+                        }),
+                        reverse(),
+                        keys,
+                        path([year, month])
+                      )(cost_list)}
+                    </Month>
+                  )
+                }),
+                reverse(),
+                keys,
+                path([year])
+              )(cost_list)}
+            </Year>
+          )
+        }),
+        sortBy(prop("date")),
+        reverse(),
+        keys
+      )(cost_list)}
+    </div>
+  )
+}
+
+export default Calendar
