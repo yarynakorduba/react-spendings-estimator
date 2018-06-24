@@ -2,16 +2,9 @@ import React, { Fragment } from "react"
 import Calendar from "./Calendar"
 import AddOutlayForm from "./AddOutlayForm"
 import { base } from "../firebase"
-import { filter, isEmpty, pipe, map, groupBy, compose, applySpec } from "ramda"
+import { filter, map, compose, applySpec } from "ramda"
 import { v1 } from "react-native-uuid"
-import { getDate, getMonth, getYear, parse } from "date-fns"
-
-
-const groupByDates = pipe(
-  groupBy(({ date }) => getYear(date)),
-  map(groupBy(({ date }) => getMonth(date))),
-  map(map(groupBy(({ date }) => getDate(date))))
-)
+import { parse } from "date-fns"
 
 const normalizeOutlayList = compose(
   map(
@@ -48,14 +41,11 @@ class Layout extends React.Component {
 
   render() {
     const { sorted_list } = this.state
+
     return (
       <Fragment>
         <AddOutlayForm addOutlay={this.addOutlay} />
-        <Calendar
-          rawData={normalizeOutlayList(sorted_list)}
-          cost_list={isEmpty(sorted_list) ? sorted_list : groupByDates(sorted_list)}
-          deleteOutlay={this.deleteOutlay}
-        />
+        <Calendar rawData={normalizeOutlayList(sorted_list)} deleteOutlay={this.deleteOutlay} />
       </Fragment>
     )
   }
