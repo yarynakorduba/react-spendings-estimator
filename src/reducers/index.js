@@ -30,13 +30,13 @@ export const outlay = (state, action) => {
             return state;
     }
 };
-export const outlays = (state=[], action) => {
+export const byId = (state={}, action) => {
     switch (action.type) {
         case 'ADD_OUTLAY':
-            return [
+            return {
                 ...state,
-                outlay(undefined, action)
-            ];
+                [action.id]: outlay(state[action.id], action)
+            };
         case 'DELETE_OUTLAY':
             console.log("kdf,nmn,mgn,mn,m,n,n "+ action.id);
             return filter(item =>
@@ -45,6 +45,16 @@ export const outlays = (state=[], action) => {
             return state;
     }
 };
+
+const allIds = (state=[], action) => {
+  switch(action.type) {
+      case 'ADD_OUTLAY':
+          return [...state, action.id];
+      default:
+          return state;
+  }
+};
+
 
 export const date = (state=[],action) => {
     switch (action.type) {
@@ -58,7 +68,8 @@ export const date = (state=[],action) => {
 
 
 export const costApp = combineReducers({
-    outlays,
+    allIds,
+    byId
 });
 
 

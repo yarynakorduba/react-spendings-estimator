@@ -39,6 +39,10 @@ const getAmountByYear = date => getAmountByInterval({ start: startOfYear(date), 
 const getAmountByMonth = date => getAmountByInterval({ start: startOfMonth(date), end: endOfMonth(date) })
 const getAmountByDay = date => getAmountByInterval({ start: startOfDay(date), end: endOfDay(date) })
 
+const getAllOutlays = (state) => {
+    return state.allIds.map(id => state.byId[id]);
+};
+
 class Calendar extends React.Component {
     componentDidMount() {
         const { store } = this.context;
@@ -53,10 +57,11 @@ class Calendar extends React.Component {
     render() {
         const {store} = this.context;
         const state = store.getState();
+        const allOutlays = getAllOutlays(state);
 
 
         return (
-    !state.outlays ? (<div>No items yet</div>) : (
+    !allOutlays ? (<div>No items yet{console.log("|||| ", allOutlays)}</div>) : (
             <div className="container">
                 I am your calendar
                 <h3>Total amount spent: { "..."}$</h3>
@@ -81,7 +86,7 @@ class Calendar extends React.Component {
                             </Month>
                         ))(items)}
                     </Year>
-                ))(state.outlays)}
+                ))(allOutlays)}
             </div>));
 }
 }
