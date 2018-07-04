@@ -3,29 +3,18 @@ import {v4} from "react-native-uuid";
 import {store} from '../configureStore';
 import {AddOutlay} from "./AddOutlay";
 import {addOutlay} from '../actions';
-import { compose, map, reverse, prop, sum, filter, groupBy, mapObjIndexed, values } from "ramda"
-import {
-    format,
-    isWithinInterval,
-    startOfDay,
-    startOfMonth,
-    startOfYear,
-    endOfDay,
-    endOfMonth,
-    endOfYear,
-    getYear,
-    getMonth,
-    getDate } from "date-fns"
+import { base } from "../firebase"
+import {fetchOutlays} from "../reducers";
 
 
 class OutlayForm extends React.Component {
     render() {
         return (
             <div>
-                Hi!
+                Hi!{console.log(fetchOutlays())}
                 <AddOutlay onAddClick={
                     (title, amount, date) =>
-                        addOutlay(title, amount, date) }
+                    {addOutlay(title, amount, date);}}
                 />
             </div>);
     }

@@ -63,7 +63,7 @@ class Calendar extends React.Component {
         return (
     !allOutlays ? (<div>No items yet{console.log("|||| ", allOutlays)}</div>) : (
             <div className="container">
-                I am your calendar
+                I am your calendar{console.log("ALL", allOutlays)};
                 <h3>Total amount spent: { "..."}$</h3>
                 {iterateBy(getYear, items => (
                     <Year key={items[0].date} date={items[0].date} titleLabel={getAmountByYear(items[0].date)(items)}>

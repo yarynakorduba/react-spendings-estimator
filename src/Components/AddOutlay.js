@@ -7,6 +7,7 @@ export const AddOutlay = ({onAddClick}) => {
         <form onSubmit={ev => {
             ev.preventDefault();
             onAddClick(title.value, amount.value, date.value);
+
         }}
         ><input
             className="container__input"
