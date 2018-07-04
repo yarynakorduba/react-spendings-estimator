@@ -1,15 +1,14 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import Layout from "./Components/Layout"
-import "./css/custom-styles.css"
+import {store} from './configureStore'
+import "./css/custom_styles.css"
+import Root from './Components/Root'
 
-const App = () => (
-  <div className="container">
-    <h1>My Cost App</h1>
-    <Layout />
-  </div>
-)
+const render = () => {
+    ReactDOM.render(
+        <Root store={store} />,
+        document.getElementById("app"))
+};
+render();
 
-ReactDOM.render(<App />, document.getElementById("app"))
-
-module.hot.accept()
+module.hot.accept();
