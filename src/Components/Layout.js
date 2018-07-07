@@ -9,17 +9,42 @@ import {connect} from 'react-redux'
 import { v1 } from "react-native-uuid"
 import { parse } from "date-fns"
 import {withRouter} from 'react-router'
+import {fetchOutlays} from "../reducers";
 
+class Layout extends React.Component {
+    componentDidMount() {
+        console.log('MOUNT');
+        var result = this.fetchData();
+        console.log(result);
+    }
+
+    componentDidUpdate() {
+        this.fetchData();
+    }
+
+    fetchData = () => {
+        return fetchOutlays().then(
+            function(response) {},
+        function(error) {}
+        );
+    }
+
+
+    render() {
+        return (<Fragment>
+            <Calendar {...this.props}/></Fragment>);
+    }
+}
 const mapStateToProps = (state) => {
     return {outlays: state.outlays};
 };
 const mapDispatchToProps = (dispatch) => {
     return {deleteOutlay:deleteOutlay};
 };
-const Layout=connect(
+Layout=connect(
     mapDispatchToProps,
     mapStateToProps,
-)(Calendar);
+)(Layout);
 
 Layout.contextTypes = {
     store: PropTypes.object

@@ -20,7 +20,6 @@ import {
 import {deleteOutlay} from "../actions";
 
 
-
 const iterateBy = (groupingFn, iteratorFn) =>
     compose(
         //prettier-ignore

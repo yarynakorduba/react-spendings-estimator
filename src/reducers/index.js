@@ -88,12 +88,12 @@ export const removeFromFirebase = (id) => {
 };
 
 export const fetchOutlays = () => {
-    return base.ref("outlays").on("value", function(snapshot) {
-        console.log(snapshot.val());
+    let result;
+
+    return base.ref("outlays").once("value").then(function(snapshot) {
+        return snapshot.val();
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
-    });
-    // return base.child("outlays").val();
-    // return base.ref().once("value").then(
-    //     function(snapshot) {return snapshot.child("outlays").val()});
+    }).then(console.log("zdfdk"));
+   // return result;
 };
