@@ -1,7 +1,7 @@
 import React from "react"
 import parse from 'date-fns/parse'
 import { combineReducers} from 'redux';
-import { base } from "../firebase"
+import {base} from "../firebase"
 
 import {filter} from 'ramda';
 
@@ -78,22 +78,12 @@ export const costApp = combineReducers({
 
 export const addToFirebase = (item) => {
     console.log(item);
-    // base.ref(`outlays/${item.id}`).set(
-    // //     item
-    // );
+    base.ref(`outlays/${item.id}`).set(
+         item
+    );
 };
 
 export const removeFromFirebase = (id) => {
     base.ref(`/${id}`).remove()
 };
 
-export const fetchOutlays = () => {
-    let result;
-
-    return base.ref("outlays").once("value").then(function(snapshot) {
-        return snapshot.val();
-    }, function (errorObject) {
-        console.log("The read failed: " + errorObject.code);
-    }).then(console.log("zdfdk"));
-   // return result;
-};

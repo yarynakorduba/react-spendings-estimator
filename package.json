@@ -31,7 +31,7 @@
     "date-fns": "^2.0.0-alpha.09",
     "prop-types": "^15.6.2",
     "re-base": "^3.2.3",
-    "react-hot-loader": "^4.0.0",
+    "react-hot-loader": "^4.3.3",
     "react-native": "^0.56.0",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",

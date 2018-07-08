@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import Calendar from "./Calendar"
 import AddOutlayForm from "./AddOutlayForm"
-import {deleteOutlay} from '../actions'
+import * as actions from '../actions'
 import PropTypes from 'prop-types'
 import { base } from "../firebase"
 import { filter, map, compose, applySpec } from "ramda"
@@ -9,13 +9,10 @@ import {connect} from 'react-redux'
 import { v1 } from "react-native-uuid"
 import { parse } from "date-fns"
 import {withRouter} from 'react-router'
-import {fetchOutlays} from "../reducers";
 
 class Layout extends React.Component {
     componentDidMount() {
-        console.log('MOUNT');
         var result = this.fetchData();
-        console.log(result);
     }
 
     componentDidUpdate() {
@@ -23,23 +20,23 @@ class Layout extends React.Component {
     }
 
     fetchData = () => {
-        return fetchOutlays().then(
-            function(response) {},
-        function(error) {}
-        );
-    }
+        console.log("IN FETCH");
+        return this.props.fetchOutlays();
+
+    };
 
 
     render() {
+        const {deleteOutlay, ...rest} = this.props;
         return (<Fragment>
-            <Calendar {...this.props}/></Fragment>);
+            <Calendar onTodoClick={deleteOutlay} {...rest}/></Fragment>);
     }
 }
 const mapStateToProps = (state) => {
     return {outlays: state.outlays};
 };
 const mapDispatchToProps = (dispatch) => {
-    return {deleteOutlay:deleteOutlay};
+    return actions;
 };
 Layout=connect(
     mapDispatchToProps,

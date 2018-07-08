@@ -19,7 +19,6 @@ import {
 } from "date-fns"
 import {deleteOutlay} from "../actions";
 
-
 const iterateBy = (groupingFn, iteratorFn) =>
     compose(
         //prettier-ignore

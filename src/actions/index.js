@@ -1,6 +1,6 @@
 import {store} from "../configureStore";
 import {v4} from "react-native-uuid";
-
+import * as api from '../api';
 
 export const addOutlay = (title, amount, date) =>
     store.dispatch({
@@ -17,3 +17,11 @@ export const deleteOutlay = (id) => store.dispatch({
     id
     });
 
+const receiveOutlays = (response) => ({
+    type: 'RECEIVE_OUTLAYS',
+    response
+});
+
+export const fetchOutlays = (filter) => api.fetchOutlays().then(response => {
+    receiveOutlays(response)
+});
