@@ -9,42 +9,38 @@ import {connect} from 'react-redux'
 import { v1 } from "react-native-uuid"
 import { parse } from "date-fns"
 import {withRouter} from 'react-router'
+import {getOutlays} from "../reducers";
+import {fetchOutlays} from "../api";
 
 class Layout extends React.Component {
     componentDidMount() {
-        var result = this.fetchData();
-    }
-
-    componentDidUpdate() {
         this.fetchData();
     }
 
+
     fetchData = () => {
-        console.log("IN FETCH");
-        return this.props.fetchOutlays();
+        const { fetchOutlays } = this.props;
+        fetchOutlays();
 
     };
 
 
     render() {
         const {deleteOutlay, ...rest} = this.props;
-        return (<Fragment>
-            <Calendar onTodoClick={deleteOutlay} {...rest}/></Fragment>);
+        return (
+            <Calendar {...rest} onTodoClick={deleteOutlay}
+                       />);
     }
 }
 const mapStateToProps = (state) => {
-    return {outlays: state.outlays};
+    return {outlays: getOutlays(state)};
 };
-const mapDispatchToProps = (dispatch) => {
-    return actions;
-};
-Layout=connect(
-    mapDispatchToProps,
-    mapStateToProps,
-)(Layout);
 
-Layout.contextTypes = {
-    store: PropTypes.object
-};
+
+Layout=connect(
+    mapStateToProps,
+    actions
+    )(Layout);
+
 
 export default Layout;

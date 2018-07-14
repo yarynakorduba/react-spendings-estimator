@@ -14,29 +14,15 @@ const iterateBy = (groupingFn, iteratorFn) =>
         groupBy(({ date }) => groupingFn(date))
     );
 
-export const outlay = (state, action) => {
-    switch (action.type) {
-        case 'ADD_OUTLAY':
-            return {
-                id: action.id,
-                title: action.title,
-                amount: Number(action.amount),
-                date: parse(action.date, "yyyy-MM-dd", new Date())
-            };
-
-        default:
-            return state;
-    }
-};
 export const byId = (state={}, action) => {
     switch (action.type) {
-        case 'ADD_OUTLAY':
-            console.log(state, "||||", action.id);
-            return {
-                ...state,
-                [action.id]: outlay(state[action.id], action)
-            };
+        case 'RECEIVE_OUTLAYS':
+            const nextState = {...state};
 
+            action.response.forEach(outlay => {
+                nextState[outlay.id] = outlay;
+            });
+            return nextState;
         default:
             return state;
     }
@@ -44,14 +30,17 @@ export const byId = (state={}, action) => {
 
 const allIds = (state=[], action) => {
   switch(action.type) {
-      case 'ADD_OUTLAY':
-          console.log("here");
-          base.ref(`outlays/${action.id}`).set(
-              action
-          );
-          return [...state, action.id];
+      case 'RECEIVE_OUTLAYS':
+          console.log(allIds);
+          return action.response.map(outlay => outlay.id);
+      // case 'ADD_OUTLAY':
+      //     console.log("here");
+      //     var data = {action};
+      //     base.ref(`outlays`).set(
+      //         data
+      //     );
+      //     return [...state, action.id];
       case 'DELETE_OUTLAY':
-          console.log(state, "fjfdjl", action.id);
           return filter(item => item != action.id, state );
       default:
           return state;
@@ -87,3 +76,9 @@ export const removeFromFirebase = (id) => {
     base.ref(`/${id}`).remove()
 };
 
+
+export const getOutlays = (state) => {
+  const ids = state.allIds;
+  console.log("=====> ", ids);
+  return ids.map(id => state.byId[id])
+};

@@ -1,19 +1,19 @@
 import {applyMiddleware, createStore} from "redux";
 import {costApp} from './reducers';
-import logger from "redux-logger";
+import { createLogger } from "redux-logger";
+import promise from 'redux-promise';
 
 
+const configureStore = () => {
+    const middlewares = [promise];
+    middlewares.push(createLogger());
 
-export const addPromiseSupportToDispatch = (store) => {
-    const rawDispatch = store.dispatch;
-    return (action) => {
-        if (typeof action.then === 'function') {
-            return action.then(rawDispatch);
-        }
-        return rawDispatch(action);
-    }
+    return createStore(
+        costApp,
+        applyMiddleware(...middlewares)
+    );
+
 };
 
-export const store = createStore(
-    costApp,
-    applyMiddleware(logger));
+
+export default configureStore;

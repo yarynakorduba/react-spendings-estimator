@@ -1,11 +1,20 @@
 import React from 'react';
-import AddOutlayForm from './AddOutlayForm';
+import AddOutlay from './AddOutlay';
 import Layout from "./Layout";
+import PropTypes from 'prop-types';
 
-export const App = () => (
+const App = () => (
     <div className="container">
         <h1>My Cost App</h1>
-        <AddOutlayForm/>
+        <AddOutlay/>
         <Layout />
     </div>
 );
+
+App.propTypes = {
+    params: PropTypes.shape({
+        filter: PropTypes.string
+    }),
+};
+
+export default App;

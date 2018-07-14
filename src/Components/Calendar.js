@@ -30,7 +30,7 @@ const iterateBy = (groupingFn, iteratorFn) =>
 const getAmountByInterval = interval =>  compose(
     sum,
     map(prop("amount")),
-    filter(({ date }) => isWithinInterval(date, interval))
+    filter(({ date }) => console.log("@@@@!", date, interval) || isWithinInterval(date, interval))
 );
 const getTotalAmount = getAmountByInterval({ start: new Date(0), end: new Date() });
 const getAmountByYear = date => getAmountByInterval({ start: startOfYear(date), end: endOfYear(date) })
@@ -41,27 +41,11 @@ const getAllOutlays = (state) => {
     return state.allIds.map(id => state.byId[id]);
 };
 
-class Calendar extends React.Component {
-    componentDidMount() {
-        const { store } = this.context;
-        this.unsubscribe = store.subscribe(() =>
-            this.forceUpdate())
-        
-    }
-    componentWillUnmount(){
-        this.unsubscribe()
-    }
+const Calendar = ({outlays, deleteOutlay}) => (
 
-    render() {
-        const {store} = this.context;
-        const state = store.getState();
-        const allOutlays = getAllOutlays(state);
-
-
-        return (
-    !allOutlays ? (<div>No items yet{console.log("|||| ", allOutlays)}</div>) : (
+    !outlays ? (<div>No items yet{console.log("|||| ", outlays)}</div>) : (
             <div className="container">
-                I am your calendar{console.log("ALL", allOutlays)};
+                {console.log("|||| ", outlays)}
                 <h3>Total amount spent: { "..."}$</h3>
                 {iterateBy(getYear, items => (
                     <Year key={items[0].date} date={items[0].date} titleLabel={getAmountByYear(items[0].date)(items)}>
@@ -84,13 +68,14 @@ class Calendar extends React.Component {
                             </Month>
                         ))(items)}
                     </Year>
-                ))(allOutlays)}
-            </div>));
-}
-}
+                ))(outlays)}
+            </div>)
+);
 
 Calendar.contextTypes = {
-    store: PropTypes.object
+    store: PropTypes.object,
+    outlays: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number.isRequired,
+    date: PropTypes.any.isRequired}))
 };
 
 export default Calendar;

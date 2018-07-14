@@ -1,14 +1,14 @@
 import React from "react"
-import ReactDOM from "react-dom"
-import {store} from './configureStore'
+import {render} from "react-dom"
+import configureStore from './configureStore'
+
+
 import "./css/custom_styles.css"
 import Root from './Components/Root'
 
-const render = () => {
-    ReactDOM.render(
+const store = configureStore();
+render(
         <Root store={store} />,
-        document.getElementById("app"))
-};
-render();
-
+        document.getElementById("app")
+);
 module.hot.accept();

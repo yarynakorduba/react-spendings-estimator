@@ -3,7 +3,7 @@ import {v4} from "react-native-uuid";
 import * as api from '../api';
 
 export const addOutlay = (title, amount, date) =>
-    store.dispatch({
+    ({
         type: 'ADD_OUTLAY',
         id: v4(),
         title,
@@ -22,6 +22,6 @@ const receiveOutlays = (response) => ({
     response
 });
 
-export const fetchOutlays = (filter) => api.fetchOutlays().then(response => {
-    receiveOutlays(response)
-});
+export const fetchOutlays = () =>
+    api.fetchOutlays().then(response => receiveOutlays(response));
+

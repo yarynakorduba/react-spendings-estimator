@@ -1,12 +1,16 @@
 import React from "react"
 import {format} from "date-fns"
+import {addOutlay} from "../actions";
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 
-export const AddOutlay = ({onAddClick}) => {
+export const AddOutlay = ({dispatch}) => {
     let title, amount, date;
+    console.log("add outlay!");
     return (
         <form onSubmit={ev => {
             ev.preventDefault();
-            onAddClick(title.value, amount.value, date.value);
+            dispatch(addOutlay(title.value, amount.value, date.value));
 
         }}
         ><input
@@ -38,3 +42,9 @@ export const AddOutlay = ({onAddClick}) => {
         </form>
     );
 };
+
+AddOutlay.propTypes = {
+    dispatch: PropTypes.func.isRequired
+};
+
+export default connect()(AddOutlay);
