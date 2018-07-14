@@ -43,9 +43,9 @@ const getAllOutlays = (state) => {
 
 const Calendar = ({outlays, deleteOutlay}) => (
 
-    !outlays ? (<div>No items yet{console.log("|||| ", outlays)}</div>) : (
+    !outlays ? (<div>No items yet</div>) : (
             <div className="container">
-                {console.log("|||| ", outlays)}
+
                 <h3>Total amount spent: { "..."}$</h3>
                 {iterateBy(getYear, items => (
                     <Year key={items[0].date} date={items[0].date} titleLabel={getAmountByYear(items[0].date)(items)}>

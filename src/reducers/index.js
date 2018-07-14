@@ -2,8 +2,9 @@ import React from "react"
 import parse from 'date-fns/parse'
 import { combineReducers} from 'redux';
 import {base} from "../firebase"
-
 import {filter} from 'ramda';
+import byId, * as fromById from './byId';
+import allIds, * as fromList from './allIds';
 
 const iterateBy = (groupingFn, iteratorFn) =>
     compose(
@@ -13,39 +14,6 @@ const iterateBy = (groupingFn, iteratorFn) =>
         mapObjIndexed(iteratorFn),
         groupBy(({ date }) => groupingFn(date))
     );
-
-export const byId = (state={}, action) => {
-    switch (action.type) {
-        case 'RECEIVE_OUTLAYS':
-            const nextState = {...state};
-
-            action.response.forEach(outlay => {
-                nextState[outlay.id] = outlay;
-            });
-            return nextState;
-        default:
-            return state;
-    }
-};
-
-const allIds = (state=[], action) => {
-  switch(action.type) {
-      case 'RECEIVE_OUTLAYS':
-          console.log(allIds);
-          return action.response.map(outlay => outlay.id);
-      // case 'ADD_OUTLAY':
-      //     console.log("here");
-      //     var data = {action};
-      //     base.ref(`outlays`).set(
-      //         data
-      //     );
-      //     return [...state, action.id];
-      case 'DELETE_OUTLAY':
-          return filter(item => item != action.id, state );
-      default:
-          return state;
-  }
-};
 
 
 export const date = (state=[],action) => {
@@ -78,7 +46,7 @@ export const removeFromFirebase = (id) => {
 
 
 export const getOutlays = (state) => {
-  const ids = state.allIds;
+  const ids = fromList.getIds(state.allIds);
   console.log("=====> ", ids);
-  return ids.map(id => state.byId[id])
+  return ids.map(id => fromById.getOutlay(state.byId, id))
 };
