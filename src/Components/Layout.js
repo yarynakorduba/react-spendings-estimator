@@ -9,31 +9,49 @@ import {connect} from 'react-redux'
 import { v1 } from "react-native-uuid"
 import { parse } from "date-fns"
 import {withRouter} from 'react-router'
-import {getOutlays} from "../reducers";
+import {getOutlays, getIsFetching} from "../reducers";
 import {fetchOutlays} from "../api";
 
 class Layout extends React.Component {
+
     componentDidMount() {
+        console.log("MOUNT");
         this.fetchData();
     }
 
 
-    fetchData = () => {
-        const { fetchOutlays } = this.props;
+    fetchData() {
+        console.log("MOUNT");
+        const { fetchOutlays, requestOutlays } = this.props;
+        requestOutlays();
         fetchOutlays();
-
     };
 
 
     render() {
-        const {deleteOutlay, ...rest} = this.props;
+        const {deleteOutlay, outlays, isFetching} = this.props;
+        if (isFetching && !outlays.length) {
+            return <p>Loading...</p>;
+        }
         return (
-            <Calendar {...rest} onTodoClick={deleteOutlay}
+            <Calendar outlays={outlays} onTodoClick={deleteOutlay}
                        />);
     }
 }
+
+Layout.propTypes = {
+    outlays: PropTypes.array.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    requestOutlays: PropTypes.func.isRequired,
+    fetchOutlays: PropTypes.func.isRequired,
+};
 const mapStateToProps = (state) => {
-    return {outlays: getOutlays(state)};
+    console.log("!!!!!!!", state);
+    return {
+        outlays: getOutlays(state),
+        isFetching: getIsFetching(state),
+
+    };
 };
 
 

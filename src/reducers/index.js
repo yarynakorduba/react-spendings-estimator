@@ -6,47 +6,20 @@ import {filter} from 'ramda';
 import byId, * as fromById from './byId';
 import allIds, * as fromList from './allIds';
 
-const iterateBy = (groupingFn, iteratorFn) =>
-    compose(
-        //prettier-ignore
-        reverse,
-        values,
-        mapObjIndexed(iteratorFn),
-        groupBy(({ date }) => groupingFn(date))
-    );
 
-
-export const date = (state=[],action) => {
-    switch (action.type) {
-        case 'SHOW_YEAR':
-        case 'SHOW_MONTH':
-        case 'SHOW_DATE':
-        default:
-                return state;
-    }
-};
-
-
-export const costApp = combineReducers({
-    allIds,
-    byId
+const outlays = combineReducers({
+    byId,
+    allIds: allIds(),
 });
 
-
-export const addToFirebase = (item) => {
-    console.log(item);
-    base.ref(`outlays/${item.id}`).set(
-         item
-    );
-};
-
-export const removeFromFirebase = (id) => {
-    base.ref(`/${id}`).remove()
-};
-
+export default outlays;
 
 export const getOutlays = (state) => {
   const ids = fromList.getIds(state.allIds);
-  console.log("=====> ", ids);
-  return ids.map(id => fromById.getOutlay(state.byId, id))
+    console.log("=====> ", state.allIds);
+
+    return ids.map(id => console.log(id) || fromById.getOutlay(state.byId, id))
 };
+
+export const getIsFetching = (state) =>
+    fromList.getIsFetching(state.allIds);

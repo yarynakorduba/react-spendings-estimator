@@ -1,5 +1,5 @@
 import {applyMiddleware, createStore} from "redux";
-import {costApp} from './reducers';
+import outlays from './reducers';
 import { createLogger } from "redux-logger";
 import promise from 'redux-promise';
 
@@ -9,7 +9,7 @@ const configureStore = () => {
     middlewares.push(createLogger());
 
     return createStore(
-        costApp,
+        outlays,
         applyMiddleware(...middlewares)
     );
 

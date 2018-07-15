@@ -12,16 +12,24 @@ export const addOutlay = (title, amount, date) =>
     });
 
 
-export const deleteOutlay = (id) => store.dispatch({
+export const deleteOutlay = (id) => ({
     type: 'DELETE_OUTLAY',
     id
     });
 
 const receiveOutlays = (response) => ({
+
     type: 'RECEIVE_OUTLAYS',
     response
 });
 
 export const fetchOutlays = () =>
-    api.fetchOutlays().then(response => receiveOutlays(response));
+    api.fetchOutlays().then(response => console.log(response) || receiveOutlays(response));
+
+export const requestOutlays = () => {
+    console.log("in request");
+    return {
+        type: 'REQUEST_OUTLAYS'
+    }
+};
 

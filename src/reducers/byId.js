@@ -1,6 +1,6 @@
 import React from "react"
 
-export const byId = (state={}, action) => {
+const byId = (state={}, action) => {
     switch (action.type) {
         case 'RECEIVE_OUTLAYS':
             const nextState = {...state};
