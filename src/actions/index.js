@@ -1,6 +1,7 @@
 import {store} from "../configureStore";
 import {v4} from "react-native-uuid";
 import * as api from '../api';
+import {getIsFetching} from "../reducers";
 
 export const addOutlay = (title, amount, date) =>
     ({
@@ -23,13 +24,20 @@ const receiveOutlays = (response) => ({
     response
 });
 
-export const fetchOutlays = () =>
-    api.fetchOutlays().then(response => console.log(response) || receiveOutlays(response));
-
-export const requestOutlays = () => {
+const requestOutlays = () => {
     console.log("in request");
     return {
         type: 'REQUEST_OUTLAYS'
     }
 };
+
+export const fetchOutlays = () => (dispatch) => {
+    if (getIsFetching(getState())) {
+        return Promise.resolve();
+    };
+    dispatch(requestOutlays());
+    return api.fetchOutlays().then(response => dispatch(receiveOutlays(response)));
+};
+
+
 

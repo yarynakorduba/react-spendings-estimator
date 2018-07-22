@@ -16,7 +16,7 @@ export default outlays;
 
 export const getOutlays = (state) => {
   const ids = fromList.getIds(state.allIds);
-    console.log("=====> ", state.allIds);
+    console.log("== ================> ", state.allIds);
 
     return ids.map(id => console.log(id) || fromById.getOutlay(state.byId, id))
 };

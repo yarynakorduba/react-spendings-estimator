@@ -10,20 +10,16 @@ import { v1 } from "react-native-uuid"
 import { parse } from "date-fns"
 import {withRouter} from 'react-router'
 import {getOutlays, getIsFetching} from "../reducers";
-import {fetchOutlays} from "../api";
 
 class Layout extends React.Component {
 
     componentDidMount() {
-        console.log("MOUNT");
         this.fetchData();
     }
 
 
     fetchData() {
-        console.log("MOUNT");
-        const { fetchOutlays, requestOutlays } = this.props;
-        requestOutlays();
+        const { fetchOutlays } = this.props;
         fetchOutlays();
     };
 
@@ -42,9 +38,9 @@ class Layout extends React.Component {
 Layout.propTypes = {
     outlays: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    requestOutlays: PropTypes.func.isRequired,
     fetchOutlays: PropTypes.func.isRequired,
 };
+
 const mapStateToProps = (state) => {
     console.log("!!!!!!!", state);
     return {

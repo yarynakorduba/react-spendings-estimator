@@ -1,11 +1,16 @@
 import {applyMiddleware, createStore} from "redux";
 import outlays from './reducers';
 import { createLogger } from "redux-logger";
-import promise from 'redux-promise';
 
+
+const thunk = (store) => (next) => (action) =>
+    typeof action === 'function' ? (console.log("!", store.getState()) ||
+        action(store.dispatch, store.getState)) :
+        next(action);
 
 const configureStore = () => {
-    const middlewares = [promise];
+    const middlewares = [thunk];
+    console.log("M", middlewares);
     middlewares.push(createLogger());
 
     return createStore(

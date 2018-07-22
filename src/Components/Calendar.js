@@ -30,20 +30,16 @@ const iterateBy = (groupingFn, iteratorFn) =>
 const getAmountByInterval = interval =>  compose(
     sum,
     map(prop("amount")),
-    filter(({ date }) => console.log("@@@@!", date, interval) || isWithinInterval(date, interval))
+    filter(({ date }) => isWithinInterval(date, interval))
 );
 const getTotalAmount = getAmountByInterval({ start: new Date(0), end: new Date() });
 const getAmountByYear = date => getAmountByInterval({ start: startOfYear(date), end: endOfYear(date) })
 const getAmountByMonth = date => getAmountByInterval({ start: startOfMonth(date), end: endOfMonth(date) })
 const getAmountByDay = date => getAmountByInterval({ start: startOfDay(date), end: endOfDay(date) })
 
-const getAllOutlays = (state) => {
-    return state.allIds.map(id => state.byId[id]);
-};
 
 const Calendar = ({outlays, deleteOutlay}) => (
 
-    !outlays ? (<div>No items yet</div>) : (
             <div className="container">
 
                 <h3>Total amount spent: { "..."}$</h3>
@@ -69,7 +65,7 @@ const Calendar = ({outlays, deleteOutlay}) => (
                         ))(items)}
                     </Year>
                 ))(outlays)}
-            </div>)
+            </div>
 );
 
 Calendar.contextTypes = {

@@ -4,6 +4,10 @@ import {combineReducers} from 'redux';
 
 const allIds = () => {
     const ids = (state = [], action) => {
+        if (action.response == null) {
+            console.log(true);
+            return state;
+        }
         switch (action.type) {
             case 'RECEIVE_OUTLAYS':
                 console.log("receive");
@@ -18,6 +22,8 @@ const allIds = () => {
     const isFetching = (state = false, action) => {
         switch (action.type) {
             case 'REQUEST_OUTLAYS':
+                console.log("request");
+
                 return true;
             case 'RECEIVE_OUTLAYS':
                 return false;
