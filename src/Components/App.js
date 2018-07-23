@@ -4,9 +4,10 @@ import Layout from "./Layout";
 import PropTypes from 'prop-types';
 
 const App = () => (
-    <div className="container">
+    <div className="outlay__list">
         <h1>My Cost App</h1>
         <AddOutlay/>
+        
         <Layout />
     </div>
 );

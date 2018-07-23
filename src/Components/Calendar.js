@@ -17,7 +17,6 @@ import {
     getMonth,
     getDate
 } from "date-fns"
-import {deleteOutlay} from "../actions";
 
 const iterateBy = (groupingFn, iteratorFn) =>
     compose(
@@ -40,9 +39,8 @@ const getAmountByDay = date => getAmountByInterval({ start: startOfDay(date), en
 
 const Calendar = ({outlays, onOutlayClick}) => (
 
-            <div className="container">
-                {console.log(onOutlayClick)}
-                <h3>Total amount spent: { "..."}$</h3>
+            <div className="outlay__list">
+                <h3>Total amount spent: {getTotalAmount(outlays)}$</h3>
                 {iterateBy(getYear, items => (
                     <Year key={items[0].date} date={items[0].date} titleLabel={getAmountByYear(items[0].date)(items)}>
                         {iterateBy(getMonth, items => (
@@ -72,7 +70,6 @@ Calendar.contextTypes = {
     outlays: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number.isRequired,
     date: PropTypes.any.isRequired})),
     onOutlayClick: PropTypes.func.isRequired,
-
 };
 
 export default Calendar;

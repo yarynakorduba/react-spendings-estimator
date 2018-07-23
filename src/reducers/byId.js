@@ -4,7 +4,6 @@ const byId = (state={}, action) => {
     switch (action.type) {
 
         case 'FETCH_OUTLAYS_SUCCESS':
-
             const nextState = {...state};
             if (action.response != null) {
             action.response.forEach(outlay => {

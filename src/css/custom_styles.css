@@ -1,14 +1,14 @@
-.container {
+.outlay__list {
     text-align: center;
     padding: 2%;
 }
 
-.container__input {
+.add-outlay__input {
     font-size: 1rem;
     margin: auto;
 }
 
-.container__input:last-child {
+.add-outlay__input:last-child {
     border-top-right-radius: 20%;
     border-bottom-right-radius: 20%;
     background: rgba(19, 65, 191, 0.65);
@@ -47,7 +47,7 @@
     float: left;
 }
 
-.container__spending {
+.outlay-details__container {
     margin: 5%;
 }
 

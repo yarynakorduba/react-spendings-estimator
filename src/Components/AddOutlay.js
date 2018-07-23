@@ -14,7 +14,7 @@ export const AddOutlay = ({dispatch}) => {
 
         }}
         ><input
-            className="container__input"
+            className="add-outlay__input"
             type="number"
             min="0"
             placeholder="$$"
@@ -22,12 +22,12 @@ export const AddOutlay = ({dispatch}) => {
                 amount = node;
             }}/>
             <input
-                className="container__input"
+                className="add-outlay__input"
                 ref={node => {
                     title = node;
                 }}/>
             <input
-                className="container__input"
+                className="add-outlay__input"
                 max={format(new Date(), "YYYY-MM-DD")}
                 ref={node => {
                     date = node;
