@@ -1,42 +1,38 @@
 import {store} from "../configureStore";
-import {v4} from "react-native-uuid";
 import * as api from '../api';
 import {getIsFetching} from "../reducers";
-
-export const addOutlay = (title, amount, date) =>
-    ({
-        type: 'ADD_OUTLAY',
-        id: v4(),
-        title,
-        amount: Number(amount),
-        date
-    });
-
+import {parse} from "date-fns";
 
 export const deleteOutlay = (id) => ({
     type: 'DELETE_OUTLAY',
     id
     });
 
-const receiveOutlays = (response) => ({
-
-    type: 'RECEIVE_OUTLAYS',
-    response
+export const addOutlay = (title, amount, date) => (dispatch) =>
+    api.addOutlay(title,amount, parse(date, "yyyy-MM-dd", new Date())).then(response => {
+        console.log("===================> ", response);
+        dispatch({
+            type: 'ADD_OUTLAY_SUCCESS',
+            response
+        })
 });
 
-const requestOutlays = () => {
-    console.log("in request");
-    return {
-        type: 'REQUEST_OUTLAYS'
-    }
-};
 
-export const fetchOutlays = () => (dispatch) => {
+export const fetchOutlays = () => (dispatch, getState) => {
     if (getIsFetching(getState())) {
         return Promise.resolve();
     };
-    dispatch(requestOutlays());
-    return api.fetchOutlays().then(response => dispatch(receiveOutlays(response)));
+
+    dispatch({
+        type: 'FETCH_OUTLAYS_REQUEST'
+    });
+
+    return api.fetchOutlays().then(response => dispatch(
+        {
+            type: 'FETCH_OUTLAYS_SUCCESS',
+            response
+        })
+    );
 };
 
 

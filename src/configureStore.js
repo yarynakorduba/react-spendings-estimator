@@ -10,7 +10,6 @@ const thunk = (store) => (next) => (action) =>
 
 const configureStore = () => {
     const middlewares = [thunk];
-    console.log("M", middlewares);
     middlewares.push(createLogger());
 
     return createStore(

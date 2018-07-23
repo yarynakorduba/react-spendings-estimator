@@ -5,14 +5,14 @@ import {combineReducers} from 'redux';
 const allIds = () => {
     const ids = (state = [], action) => {
         if (action.response == null) {
-            console.log(true);
             return state;
         }
         switch (action.type) {
-            case 'RECEIVE_OUTLAYS':
-                console.log("receive");
+            case 'FETCH_OUTLAYS_SUCCESS':
                 return action.response.map(outlay => outlay.id);
-            case 'DELETE_OUTLAY':
+            case 'ADD_OUTLAY_SUCCESS':
+                return [...state, action.response.id];
+                case 'DELETE_OUTLAY':
                 return filter(item => item != action.id, state);
             default:
                 return state;
@@ -21,11 +21,9 @@ const allIds = () => {
 
     const isFetching = (state = false, action) => {
         switch (action.type) {
-            case 'REQUEST_OUTLAYS':
-                console.log("request");
-
+            case 'FETCH_OUTLAYS_REQUEST':
                 return true;
-            case 'RECEIVE_OUTLAYS':
+            case 'FETCH_OUTLAYS_SUCCESS':
                 return false;
             default:
                 return state;
