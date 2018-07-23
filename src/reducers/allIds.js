@@ -12,8 +12,9 @@ const allIds = () => {
                 return action.response.map(outlay => outlay.id);
             case 'ADD_OUTLAY_SUCCESS':
                 return [...state, action.response.id];
-                case 'DELETE_OUTLAY':
-                return filter(item => item != action.id, state);
+            case 'DELETE_OUTLAY_SUCCESS':
+                console.log("DELETE", action);
+                return filter(item => item != action.response, state);
             default:
                 return state;
         }

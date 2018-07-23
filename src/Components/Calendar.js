@@ -38,10 +38,10 @@ const getAmountByMonth = date => getAmountByInterval({ start: startOfMonth(date)
 const getAmountByDay = date => getAmountByInterval({ start: startOfDay(date), end: endOfDay(date) })
 
 
-const Calendar = ({outlays, deleteOutlay}) => (
+const Calendar = ({outlays, onOutlayClick}) => (
 
             <div className="container">
-
+                {console.log(onOutlayClick)}
                 <h3>Total amount spent: { "..."}$</h3>
                 {iterateBy(getYear, items => (
                     <Year key={items[0].date} date={items[0].date} titleLabel={getAmountByYear(items[0].date)(items)}>
@@ -54,8 +54,7 @@ const Calendar = ({outlays, deleteOutlay}) => (
                                         {map(
                                             ({amount, id, title}) => (
                                                 <Outlay key={id} amount={amount} id={id} title={title}
-
-                                                        onDeleteOutlay={deleteOutlay}/>
+                                                        onDeleteOutlay={() => onOutlayClick(id)}/>
                                             ),
                                             items
                                         )}
@@ -71,7 +70,9 @@ const Calendar = ({outlays, deleteOutlay}) => (
 Calendar.contextTypes = {
     store: PropTypes.object,
     outlays: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number.isRequired,
-    date: PropTypes.any.isRequired}))
+    date: PropTypes.any.isRequired})),
+    onOutlayClick: PropTypes.func.isRequired,
+
 };
 
 export default Calendar;

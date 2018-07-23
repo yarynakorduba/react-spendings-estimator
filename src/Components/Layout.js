@@ -25,8 +25,9 @@ class Layout extends React.Component {
         if (isFetching && !outlays.length) {
             return <p>Loading...</p>;
         }
+        console.log("DELETE ", deleteOutlay);
         return (
-            <Calendar outlays={outlays} onTodoClick={deleteOutlay}
+            <Calendar outlays={outlays} onOutlayClick={deleteOutlay}
                        />);
     }
 }
@@ -35,6 +36,7 @@ Layout.propTypes = {
     outlays: PropTypes.array.isRequired,
     isFetching: PropTypes.bool.isRequired,
     fetchOutlays: PropTypes.func.isRequired,
+    deleteOutlay: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

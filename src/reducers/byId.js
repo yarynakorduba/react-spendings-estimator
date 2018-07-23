@@ -17,6 +17,7 @@ const byId = (state={}, action) => {
                 ...state,
                 [action.response.id]: action.response
             };
+
         default:
             return state;
     }

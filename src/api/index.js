@@ -1,11 +1,19 @@
 import {base} from "../firebase";
 import {v4} from "react-native-uuid";
-import {parse } from "date-fns";
+
+function snapshotToArray(snapshot) {
+    var returnArr = [];
+    snapshot.forEach(function(childSnapshot) {
+        var item = childSnapshot.val();
+        item.key = childSnapshot.key;
+        returnArr.push(item);
+    });
+    return returnArr;
+};
 
 export const fetchOutlays = () => {
-    return base.ref("outlays").once("value").then(function(snapshot) {
-        const result = snapshot.val();
-        return result;
+    return base.ref("outlays").once("value").then(snapshot => {
+        return snapshotToArray(snapshot);
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
@@ -13,23 +21,20 @@ export const fetchOutlays = () => {
 
 export const addOutlay = (title, amount, date) =>
 {
-console.log(typeof newDate);
         const outlay = {
         type: 'ADD_OUTLAY',
         id: v4(),
         title,
-        amount: Number(amount),
+        amount: Number(amount)
     };
-    var result = fetchOutlays().then(result => {
-        var newList = (result != null) ? [...result, {...outlay, date: String(date)}] :
-            [{...outlay, date: String(date)}];
-        base.ref(`/outlays`).set(newList);
-        return {...outlay, date: date};
-        }
-    );
 
+    return base.ref(`/outlays/${outlay.id}`).set({...outlay, date: String(date)})
+        .then(() => {
+            return {...outlay, date: date};
+        });
+};
 
-    return result;
-
-
+export const deleteOutlay = (id) => {
+    console.log("ID", id);
+    return base.ref(`/outlays/${id}`).set(null).then(() => id);
 };
