@@ -10,7 +10,6 @@ export const deleteOutlay = (id) => (dispatch) => (
             response
         })
     )
-
     );
 
 export const addOutlay = (title, amount, date) => (dispatch) =>
