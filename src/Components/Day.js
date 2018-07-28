@@ -36,7 +36,7 @@ class Day extends Component {
                          </div>
          <div className={visible ? "day__items day__items--visible" :
              "day__items day__items--invisible"}><button onClick={() => this.changeVisibility()}
-             class="day__items--toggler">^</button>Total: {titleLabel}$ {children}</div>
+             className="day__items--toggler">^</button>Total: {titleLabel}$ {children}</div>
      </span>
         );
     }

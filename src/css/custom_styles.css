@@ -24,7 +24,7 @@
 .month {
     background: rgba(221, 160, 221, 0.23);
     width: 32%;
-    margin: 0 0% 1% 0.5%;
+    margin: 0 0% 1% 1%;
     display: inline-table;
 }
 
@@ -41,8 +41,8 @@
 }
 
 .outlay-details__container {
-    padding:5%;
-    width: 120px;
+    padding:5% 0%;
+    width: 100%;
 }
 
 .item__button {
@@ -72,6 +72,7 @@
     background: white;
     border-radius: 2%;
     box-shadow: #777777 0 0 7px;
+    max-width: 300px;
 
 }
 .day__items--invisible {
@@ -96,21 +97,23 @@
 }
 
 .day__heading--minimal {
-    background: rgba(126, 166, 221, 0.5);
+    background: rgb(138, 194, 251);
+    color: white;
 }
 
 .day__heading--average {
-    background: rgba(126, 166, 221, 0.8);
+    background: rgb(102, 157, 233);
+    color: white;
 
 }
 
 .day__heading--high {
-    background: rgb(107, 149, 221);
-}
+    background: rgb(43, 106, 210);
+    color: white;}
 
 .day__heading--very-high {
-    background: rgb(60, 114, 221);
-
+    background: rgb(5, 66, 185);
+    color: white;
 }
 
 .month__weekdays {
