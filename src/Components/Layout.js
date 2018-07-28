@@ -1,11 +1,10 @@
-import React, { Fragment } from "react"
+import React from "react"
 import Calendar from "./Calendar"
 import * as actions from '../actions'
 import PropTypes from 'prop-types'
-import { filter, map, compose, applySpec } from "ramda"
 import {connect} from 'react-redux'
-import { parse } from "date-fns"
 import {getOutlays, getIsFetching} from "../reducers";
+
 
 class Layout extends React.Component {
 
@@ -21,13 +20,13 @@ class Layout extends React.Component {
 
 
     render() {
-        const {deleteOutlay, outlays, isFetching} = this.props;
+
+        const {deleteOutlay, outlays, isFetching, addOutlay } = this.props;
         if (isFetching && !outlays.length) {
             return <p>Loading...</p>;
         }
-        console.log("DELETE ", deleteOutlay);
         return (
-            <Calendar outlays={outlays} onOutlayClick={deleteOutlay}
+            <Calendar outlays={outlays} onOutlayClick={deleteOutlay} onAdd={addOutlay}
                        />);
     }
 }
@@ -37,21 +36,18 @@ Layout.propTypes = {
     isFetching: PropTypes.bool.isRequired,
     fetchOutlays: PropTypes.func.isRequired,
     deleteOutlay: PropTypes.func.isRequired,
+    addOutlay : PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state) => {
-    return {
+const mapStateToProps = (state) => ({
         outlays: getOutlays(state),
         isFetching: getIsFetching(state),
-
-    };
-};
+    });
 
 
-Layout=connect(
+
+Layout = connect(
     mapStateToProps,
     actions
-    )(Layout);
-
-
+)(Layout);
 export default Layout;

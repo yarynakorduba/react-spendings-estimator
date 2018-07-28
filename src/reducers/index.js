@@ -18,3 +18,4 @@ export const getOutlays = (state) => {
 
 export const getIsFetching = (state) =>
     fromList.getIsFetching(state.allIds);
+

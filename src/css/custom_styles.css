@@ -15,40 +15,34 @@
     color: white;
 }
 
-.container__year {
+.year {
     text-align: left;
     background: whitesmoke;
-    margin: 3%;
+    margin: 2%;
 }
 
-.container__month {
+.month {
     background: rgba(221, 160, 221, 0.23);
-    width: 20%;
-    margin: 0 2.5% 2% 2.5%;
-    display: inline-grid;
+    width: 32%;
+    margin: 0 0% 1% 0.5%;
+    display: inline-table;
 }
 
-.container__heading--small {
+
+
+.heading--small {
     height: fit-content;
     text-align: center;
     display: block;
-    margin: 5%;
-    margin-bottom: 1%;
+    margin: 5% 5% 1% 5%;
     padding-top: 1%;
     font-weight: bold;
-}
-
-.container__day {
-    display: block;
-    background: rgba(126, 166, 221, 0.28);
-    padding: 2%;
-    margin: 5%;
-    text-align: left;
-    float: left;
+    min-width: 33%;
 }
 
 .outlay-details__container {
-    margin: 5%;
+    padding:5%;
+    width: 120px;
 }
 
 .item__button {
@@ -63,3 +57,76 @@
     background: rgba(169, 169, 169, 0.57);
 }
 
+
+.day {
+    margin: 0.5%;
+    text-align: left;
+    float: left;
+    min-width: 13%;
+    width: fit-content;
+}
+
+.day__items {
+    padding: 2%;
+    position: absolute;
+    background: white;
+    border-radius: 2%;
+    box-shadow: #777777 0 0 7px;
+
+}
+.day__items--invisible {
+    display: none;
+}
+
+.day__items--visible {
+    display: block;
+}
+
+.day__heading {
+    height: fit-content;
+    text-align: center;
+    display: block;
+    margin: 5% 5% 1% 5%;
+    padding-top: 1%;
+    min-width: 33%;
+}
+
+.day__heading--costless {
+    background: rgba(126, 166, 221, 0.2);
+}
+
+.day__heading--minimal {
+    background: rgba(126, 166, 221, 0.5);
+}
+
+.day__heading--average {
+    background: rgba(126, 166, 221, 0.8);
+
+}
+
+.day__heading--high {
+    background: rgb(107, 149, 221);
+}
+
+.day__heading--very-high {
+    background: rgb(60, 114, 221);
+
+}
+
+.month__weekdays {
+    float: left;
+    width: 13%;
+    margin: 0.5%;
+    color: #777;
+    font-size: 11px;
+    text-align: center;
+}
+
+.day__items--toggler {
+    float: right;
+    margin-top: -2%;
+    background: white;
+    border: 2px solid whitesmoke;
+    color: #777;
+
+}

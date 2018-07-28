@@ -6,12 +6,10 @@ import {connect} from 'react-redux';
 
 export const AddOutlay = ({dispatch}) => {
     let title, amount, date;
-    console.log("add outlay!");
     return (
         <form onSubmit={ev => {
             ev.preventDefault();
             dispatch(addOutlay(title.value, amount.value, date.value));
-
         }}
         ><input
             className="add-outlay__input"

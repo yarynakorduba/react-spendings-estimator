@@ -1,10 +1,10 @@
 import React from "react"
 import {Year} from './Year'
 import {Month} from './Month'
-import {Day} from './Day'
-import {Outlay} from './Outlay'
+import Day from './Day'
+import Outlay from './Outlay'
 import PropTypes from 'prop-types'
-import {compose, map, reverse, prop, sum, filter, groupBy, isEmpty, mapObjIndexed, values, tap, indexOf} from 'ramda'
+import {compose, map, reverse, prop, sum, filter, groupBy, isEmpty, mapObjIndexed, values, tap} from 'ramda'
 import {
     isWithinInterval,
     startOfDay,
@@ -15,7 +15,8 @@ import {
     endOfYear,
     getYear,
     getMonth,
-    getDate
+    getDate,
+    getDaysInMonth
 } from "date-fns"
 
 const getAmountByInterval = interval =>  compose(
@@ -38,24 +39,60 @@ const iterateBy = (groupingFn, iteratorFn) =>
         groupBy(({ date }) => groupingFn(date))
     );
 const filterMonth = (month) => (item) => {
-    console.log(getMonth(new Date(item.date)) === month);
     return getMonth(new Date(item.date)) === month;
 };
 
+const filterDay = (day) => (item) => {
+  //  console.log(item);
+    if (getDate(new Date(item.date)) === day) console.log("YESSSSSSSSSSSSSSSS");
+    return getDate(new Date(item.date)) === day;
+};
+
+
+
+const iterByDay = (items) => compose(
+    map(day => 
+        <Day key={day.key} date={new Date(0, 0, day.key)}
+             titleLabel={isEmpty(day.value) ? 0 :
+                 getAmountByDay(day.value[0].date)(items.value)}>
+
+             {
+                 isEmpty(day.value) ? "" : map(outlay =>
+                     <Outlay key={outlay.id}
+                             amount={outlay.amount}
+                             id={outlay.id}
+                             title={outlay.title}/>)(day.value)
+             }
+    </Day>),
+map(day => {return {key: day, value: filter(filterDay(day),items.value)}}),
+);
+
+const generateNumberArray = (number) => {
+    let result = Array(number);
+
+    for (let i=0; i<number; i++){
+        result[i] = i+1;
+    }
+    return result;
+}
 
 const iterByMonth = (items) => compose(
-    map((month) => console.log("^^^^^^^^^^^^", new Date(0, month.key[0], 0)) ||
-        <Month key={month.key} date={new Date(0, month.key, 0)} titleLabel={isEmpty(month.value) ? 0 :
-            getAmountByMonth(month.value[0].date)(items)}></Month>
+    map((month) =>
+        <Month key={month.key} date={new Date(getYear(items[0].date), month.key, 0)} titleLabel={isEmpty(month.value) ? 0 :
+            getAmountByMonth(month.value[0].date)(items)}>
+            {iterByDay(month)(generateNumberArray(getDaysInMonth(new Date(getYear(items[0].date), month.key, 0))))
+            }
+        </Month>
     ),
     tap(el => console.log(el)),
-    map(month => {return {key: [month], value: filter(filterMonth(month),items)}}),
+    map(month => {return {key: month, value: filter(filterMonth(month),items)}}),
     );
 
 
 
-const Calendar = ({outlays, onOutlayClick}) => (
 
+
+const Calendar = ({outlays}) => (
             <div className="outlay__list">
                 <h3>Total amount spent: {getTotalAmount(outlays)}$</h3>
                 {iterateBy(getYear, items => (
@@ -67,33 +104,10 @@ const Calendar = ({outlays, onOutlayClick}) => (
 );
 
 
-/*
-*                         {
-                            iterateBy(getMonth, items => (
-                            <Month key={items[0].date} date={items[0].date}
-                                   titleLabel={getAmountByMonth(items[0].date)(items)}>
-                                {iterateBy(getDate, items => (
-                                    <Day key={items[0].date} date={items[0].date}
-                                         titleLabel={getAmountByDay(items[0].date)(items)}>
-                                        {map(
-                                            ({amount, id, title}) => (
-                                                <Outlay key={id} amount={amount} id={id} title={title}
-                                                        onDeleteOutlay={() => onOutlayClick(id)}/>
-                                            ),
-                                            items
-                                        )}
-                                    </Day>
-                                ))(items)}
-                            </Month>
-                        ))(items)}
-*
-* */
-
 Calendar.contextTypes = {
     store: PropTypes.object,
     outlays: PropTypes.arrayOf(PropTypes.shape({id: PropTypes.number.isRequired,
-    date: PropTypes.any.isRequired})),
-    onOutlayClick: PropTypes.func.isRequired,
+    date: PropTypes.any.isRequired}))
 };
 
 export default Calendar;

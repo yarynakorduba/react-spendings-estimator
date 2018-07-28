@@ -1,4 +1,3 @@
-import {store} from "../configureStore";
 import * as api from '../api';
 import {getIsFetching} from "../reducers";
 import {parse} from "date-fns";
