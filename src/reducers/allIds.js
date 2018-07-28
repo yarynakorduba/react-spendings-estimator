@@ -1,43 +1,40 @@
-import {filter} from "ramda";
-import {combineReducers} from 'redux';
-
+import { filter } from "ramda"
+import { combineReducers } from "redux"
 
 const allIds = () => {
-    const ids = (state = [], action) => {
-        if (action.response == null) {
-            return state;
-        }
-        switch (action.type) {
-            case 'FETCH_OUTLAYS_SUCCESS':
-                return action.response.map(outlay => outlay.id);
-            case 'ADD_OUTLAY_SUCCESS':
-                return [...state, action.response.id];
-            case 'DELETE_OUTLAY_SUCCESS':
-                console.log("DELETE", action);
-                return filter(item => item != action.response, state);
-            default:
-                return state;
-        }
-    };
+  const ids = (state = [], action) => {
+    if (action.response == null) {
+      return state
+    }
+    switch (action.type) {
+      case "FETCH_OUTLAYS_SUCCESS":
+        return action.response.map(outlay => outlay.id)
+      case "ADD_OUTLAY_SUCCESS":
+        return [...state, action.response.id]
+      case "DELETE_OUTLAY_SUCCESS":
+        return filter(item => item != action.response, state)
+      default:
+        return state
+    }
+  }
 
-    const isFetching = (state = false, action) => {
-        switch (action.type) {
-            case 'FETCH_OUTLAYS_REQUEST':
-                return true;
-            case 'FETCH_OUTLAYS_SUCCESS':
-                return false;
-            default:
-                return state;
-        }
-    };
+  const isFetching = (state = false, action) => {
+    switch (action.type) {
+      case "FETCH_OUTLAYS_REQUEST":
+        return true
+      case "FETCH_OUTLAYS_SUCCESS":
+        return false
+      default:
+        return state
+    }
+  }
 
-    return combineReducers({
-        ids,
-        isFetching
-    });
+  return combineReducers({
+    ids,
+    isFetching
+  })
+}
 
-};
-
-export default allIds;
-export const getIds = (state) => state.ids;
-export const getIsFetching = (state) => state.isFetching;
+export default allIds
+export const getIds = state => state.ids
+export const getIsFetching = state => state.isFetching

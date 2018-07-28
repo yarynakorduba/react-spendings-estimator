@@ -29,6 +29,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.10",
     "date-fns": "^2.0.0-alpha.09",
+    "prettier": "^1.13.7",
     "prop-types": "^15.6.2",
     "re-base": "^3.2.3",
     "react-hot-loader": "^4.3.3",
