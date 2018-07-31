@@ -8,7 +8,7 @@ export const AddOutlay = ({ dispatch }) => {
   let title, amount, date
   return (
     <Fragment>
-      <form
+      <form className="add-outlay"
         onSubmit={ev => {
           ev.preventDefault()
           dispatch(addOutlay(title.value, amount.value, date.value))

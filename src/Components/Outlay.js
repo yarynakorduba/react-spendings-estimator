@@ -4,10 +4,10 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 
 const Outlay = ({ amount, title, id, dispatch }) => (
-  <div className="outlay-details__container">
+  <div className="outlay-details">
     {amount}
     $&nbsp;{title}
-    <button className="outlay__details--button" onClick={() => dispatch(deleteOutlay(id))}>
+    <button className="outlay-details__delete-button" onClick={() => dispatch(deleteOutlay(id))}>
       x
     </button>
   </div>

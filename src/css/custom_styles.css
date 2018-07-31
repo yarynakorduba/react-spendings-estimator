@@ -1,14 +1,24 @@
+*:focus {
+  outline: none;
+}
+
+input:focus {
+  border-color: #777;
+  box-shadow: 0 1px 0px #999 inset, 0 0 4px #999;
+
+}
 .outlay {
   position: absolute;
-  background: #7abf08;
+  background: rgba(122, 191, 8, 0.74);
   border-radius: 100%;
-  height: 1rem;
-  width: 1rem;
+  width: fit-content;
+  width: 1.1rem;
   font-family: Pt Mono, monospace;
   font-size: 10px;
-  padding: 0.2rem;
+  padding: 0.6rem;
   line-height: 1rem;
-  top: 0px;
+  top: -0.3rem;
+  left: -0.6rem;
 }
 .outlay:after {
   content: "$";
@@ -36,6 +46,8 @@
   font-family: "Courier New";
   height: 25px;
   margin: auto;
+  border: solid 1px #ccc;
+  border-radius: 10px;
 }
 
 .add-outlay__input:last-child {
@@ -46,9 +58,14 @@
 }
 
 .add-outlay__button {
-  height: 29px;
+  height: 2rem;
+  width: 2rem;
+  padding: 0.5rem;
   border-bottom-right-radius: 15%;
   border-top-right-radius: 15%;
+  border: solid 1px #ccc;
+  border-radius: 100%;
+  background: rgba(153, 153, 153, 0.77);
 }
 
 .month__weekdays {
@@ -60,12 +77,16 @@
   text-align: center;
 }
 
-.outlay-details__container {
+.month--separator {
+  fill: #999;
+}
+
+.outlay-details {
   padding: 5% 0;
   width: 100%;
 }
 
-.outlay__details--button {
+.outlay-details__delete-button {
   float: right;
   border-radius: 100%;
   background: rgba(169, 169, 169, 0.84);
@@ -73,6 +94,6 @@
   color: whitesmoke;
 }
 
-.outlay__details--button:hover {
+.outlay-details__delete-button:hover {
   background: rgba(169, 169, 169, 0.57);
 }

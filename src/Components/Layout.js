@@ -4,21 +4,11 @@ import * as actions from "../actions"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { getOutlays, getIsFetching } from "../reducers"
-import { isSameDay, format, isSameYear } from "date-fns"
+import { isSameYear } from "date-fns"
 import { groupWith, compose, sort, map, head, sum } from "ramda"
+import {Day} from "./Day"
 
-const Day = ({ day, outlays }) => {
-  const outlaysOfDay = outlays.filter(({ date }) => isSameDay(date, day))
 
-  return outlaysOfDay.length > 0 ? (
-    <span className={"day day--active"}>
-      {format(day, "d")}
-      <div className={"outlay"}>{sum(outlaysOfDay.map(({ amount }) => amount))}</div>
-    </span>
-  ) : (
-    <span className={"day"} > {format(day, "d")}</span>
-  )
-}
 
 class Layout extends React.Component {
   componentDidMount() {
