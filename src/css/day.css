@@ -1,0 +1,56 @@
+.day__items {
+  padding: 2%;
+  position: absolute;
+  background: white;
+  border-radius: 2%;
+  box-shadow: #777777 0 0 7px;
+  max-width: 300px;
+}
+.day__items--invisible {
+  display: none;
+}
+
+.day__items--visible {
+  display: block;
+}
+
+.day__heading {
+  height: fit-content;
+  text-align: center;
+  display: block;
+  margin: 5% 5% 1% 5%;
+  padding: 3%;
+  min-width: 33%;
+  font-size: smaller;
+
+  border-bottom: 1px solid transparent;
+}
+
+.day__heading--costless {
+  border-color: transparent;
+  color: #ccc;
+}
+
+.day__heading--minimal {
+  border-color: #74c77d;
+}
+
+.day__heading--average {
+  border-color: #64ab71;
+}
+
+.day__heading--high {
+    border-color: #048a39;
+}
+
+.day__heading--very-high {
+    border-color:#09632c;
+}
+
+.day__items--toggler {
+  float: right;
+  margin-top: -2%;
+  background: white;
+  border: 2px solid whitesmoke;
+  color: #777;
+}

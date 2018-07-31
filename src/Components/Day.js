@@ -1,6 +1,6 @@
 import React, { Component } from "react"
 import { format } from "date-fns"
-
+import "../css/day.css"
 class Day extends Component {
   constructor(props) {
     super()

@@ -3,6 +3,8 @@ import AddOutlay from "./AddOutlay"
 import Layout from "./Layout"
 import PropTypes from "prop-types"
 
+import "../css/heading.css"
+
 const App = () => (
   <div className="outlay--list">
     <h1 className="heading--large">My Cost App</h1>

@@ -4,7 +4,7 @@ import { Month } from "./Month"
 import Day from "./Day"
 import Outlay from "./Outlay"
 import PropTypes from "prop-types"
-import { compose, map, reverse, prop, sum, filter, groupBy, isEmpty, mapObjIndexed, values } from "ramda"
+import { compose, map, reverse, prop, sum, filter, groupBy, isEmpty, mapObjIndexed, values, times, inc } from "ramda"
 import {
   isWithinInterval,
   startOfDay,
@@ -16,15 +16,17 @@ import {
   getYear,
   getMonth,
   getDate,
-  getDaysInMonth
+  getDaysInMonth,
+  format,
+  eachWeekOfInterval,
+  endOfWeek,
+  eachDayOfInterval
 } from "date-fns"
 
+import "../css/calendar.css"
+
 const getAmountByInterval = interval =>
-  compose(
-    sum,
-    map(prop("amount")),
-    filter(({ date }) => isWithinInterval(date, interval))
-  )
+  compose(sum, map(prop("amount")), filter(({ date }) => isWithinInterval(date, interval)))
 const getTotalAmount = getAmountByInterval({ start: new Date(0), end: new Date() })
 const getAmountByYear = date => getAmountByInterval({ start: startOfYear(date), end: endOfYear(date) })
 const getAmountByMonth = date => getAmountByInterval({ start: startOfMonth(date), end: endOfMonth(date) })
@@ -39,13 +41,9 @@ const iterateBy = (groupingFn, iteratorFn) =>
     mapObjIndexed(iteratorFn),
     groupBy(({ date }) => groupingFn(date))
   )
-const filterMonth = month => item => {
-  return getMonth(new Date(item.date)) === month
-}
 
-const filterDay = day => item => {
-  return getDate(new Date(item.date)) === day
-}
+const filterMonth = month => item => getMonth(new Date(item.date)) === month
+const filterDay = day => item => getDate(new Date(item.date)) === day
 
 const iterByDay = items =>
   compose(
@@ -62,21 +60,12 @@ const iterByDay = items =>
             )}
       </Day>
     )),
-    map(day => {
-      return { key: day, value: filter(filterDay(day), items.value) }
-    })
+    map(day => ({ key: day, value: filter(filterDay(day), items.value) }))
   )
 
-const generateNumberArray = number => {
-  let result = Array(number)
+const generateNumberArray = times(inc)
 
-  for (let i = 0; i < number; i++) {
-    result[i] = i + 1
-  }
-  return result
-}
-
-const iterByMonth = items =>
+const iterYearByMonth = items =>
   compose(
     map(month => (
       <Month
@@ -87,21 +76,48 @@ const iterByMonth = items =>
         {iterByDay(month)(generateNumberArray(getDaysInMonth(new Date(getYear(items[0].date), month.key, 0))))}
       </Month>
     )),
+    reverse,
     map(month => {
       return { key: month, value: filter(filterMonth(month), items) }
     })
   )
 
-const Calendar = ({ outlays }) => (
+const _Calendar = ({ outlays }) => (
   <div className="outlay--list">
     <h3>Total amount spent: {getTotalAmount(outlays)}$</h3>
     {iterateBy(getYear, items => (
       <Year key={items[0].date} date={items[0].date} titleLabel={getAmountByYear(items[0].date)(items)}>
-        {iterByMonth(items)(months)}
+        {iterYearByMonth(items)(months)}
       </Year>
     ))(outlays)}
   </div>
 )
+
+const Calendar = ({ year, children = () => {} }) => {
+  const monthsOfYear = times(month => {
+    const start = new Date(year, month, 1)
+    return {
+      start,
+      end: endOfMonth(start)
+    }
+  }, 12)
+
+  return (
+    <div>
+      {monthsOfYear
+        .filter(({ start }) => start - new Date() < 0)
+        .reverse()
+        .map(montInterval => (
+          <div>
+            <h3>{format(montInterval.start, "MMM")}</h3>
+            {eachWeekOfInterval(montInterval)
+              .map(start => ({ start, end: endOfWeek(start) }))
+              .map(weekInterval => <div>{eachDayOfInterval(weekInterval).map(day => children(day))}</div>)}
+          </div>
+        ))}
+    </div>
+  )
+}
 
 Calendar.contextTypes = {
   store: PropTypes.object,
