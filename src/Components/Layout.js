@@ -1,54 +1,44 @@
-import React, { Fragment } from "react"
+import React from "react"
 import Calendar from "./Calendar"
-import AddOutlayForm from "./AddOutlayForm"
-import { base } from "../firebase"
-import { filter, map, compose, applySpec } from "ramda"
-import { v1 } from "react-native-uuid"
-import { parse } from "date-fns"
-
-const normalizeOutlayList = compose(
-  map(
-    applySpec({
-      id: ({ id }) => id,
-      title: ({ title }) => title,
-      amount: ({ amount }) => Number(amount),
-      date: ({ date }) => parse(date, "yyyy-MM-dd", new Date())
-    })
-  )
-)
+import * as actions from "../actions"
+import PropTypes from "prop-types"
+import { connect } from "react-redux"
+import { getOutlays, getIsFetching } from "../reducers"
 
 class Layout extends React.Component {
-  state = { sorted_list: [] }
-
   componentDidMount() {
-    this.cost_listRef = base.syncState("sorted_list", {
-      context: this,
-      state: "sorted_list"
-    })
+    this.fetchData()
   }
 
-  componentWillUnmount() {
-    base.removeBinding(this.cost_listRef)
-  }
-
-  addOutlay = item => {
-    this.setState({ sorted_list: [item, ...this.state.sorted_list] })
-  }
-
-  deleteOutlay = id => {
-    this.setState({ sorted_list: filter(i => i.id !== id, this.state.sorted_list) })
+  fetchData() {
+    const { fetchOutlays } = this.props
+    fetchOutlays()
   }
 
   render() {
-    const { sorted_list } = this.state
-
-    return (
-      <Fragment>
-        <AddOutlayForm addOutlay={this.addOutlay} />
-        <Calendar rawData={normalizeOutlayList(sorted_list)} deleteOutlay={this.deleteOutlay} />
-      </Fragment>
-    )
+    const { deleteOutlay, outlays, isFetching, addOutlay } = this.props
+    if (isFetching && !outlays.length) {
+      return <p>Loading...</p>
+    }
+    return <Calendar outlays={outlays} onOutlayClick={deleteOutlay} onAdd={addOutlay} />
   }
 }
 
+Layout.propTypes = {
+  outlays: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  fetchOutlays: PropTypes.func.isRequired,
+  deleteOutlay: PropTypes.func.isRequired,
+  addOutlay: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({
+  outlays: getOutlays(state),
+  isFetching: getIsFetching(state)
+})
+
+Layout = connect(
+  mapStateToProps,
+  actions
+)(Layout)
 export default Layout

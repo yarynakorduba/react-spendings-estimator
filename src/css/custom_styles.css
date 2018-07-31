@@ -1,0 +1,142 @@
+.heading--small {
+  height: fit-content;
+  text-align: center;
+  display: block;
+  margin: 5% 5% 1% 5%;
+  padding-top: 1%;
+  font-weight: bold;
+  min-width: 33%;
+}
+.heading--large {
+  font-family: "Courier New";
+}
+.outlay--list {
+  text-align: center;
+  padding: 2%;
+}
+
+.add-outlay__input {
+  font-size: 1rem;
+  font-family: "Courier New";
+  height: 25px;
+  margin: auto;
+}
+
+.add-outlay__input:last-child {
+  border-top-right-radius: 20%;
+  border-bottom-right-radius: 20%;
+  background: rgba(19, 65, 191, 0.65);
+  color: white;
+}
+
+.add-outlay__button {
+  height: 29px;
+  border-bottom-right-radius: 15%;
+  border-top-right-radius: 15%;
+}
+
+.calendar__year {
+  text-align: left;
+  background: #feffdf;
+  margin: 3% 7%;
+}
+
+.calendar__month {
+  background: #dde0ab;
+  width: 32%;
+  margin: 0 0% 1% 0.8%;
+  padding-bottom: 1%;
+  padding-left: 0.2%;
+  display: inline-table;
+}
+.month__weekdays {
+  float: left;
+  width: 13%;
+  margin: 0.5%;
+  color: #777;
+  font-size: 11px;
+  text-align: center;
+}
+
+.calendar__day {
+  margin: 0.5% 0% 0.5% 1%;
+  text-align: left;
+  float: left;
+  min-width: 13%;
+  width: fit-content;
+}
+
+.day__items {
+  padding: 2%;
+  position: absolute;
+  background: white;
+  border-radius: 2%;
+  box-shadow: #777777 0 0 7px;
+  max-width: 300px;
+}
+.day__items--invisible {
+  display: none;
+}
+
+.day__items--visible {
+  display: block;
+}
+
+.day__heading {
+  height: fit-content;
+  text-align: center;
+  display: block;
+  margin: 5% 5% 1% 5%;
+  padding: 3%;
+  min-width: 33%;
+  font-size: smaller;
+}
+
+.day__heading--costless {
+  background: rgba(126, 166, 221, 0.2);
+}
+
+.day__heading--minimal {
+  background: #74c77d;
+  color: white;
+}
+
+.day__heading--average {
+  background: #64ab71;
+  color: white;
+}
+
+.day__heading--high {
+  background: #048a39;
+  color: white;
+}
+
+.day__heading--very-high {
+  background: #09632c;
+  color: white;
+}
+
+.day__items--toggler {
+  float: right;
+  margin-top: -2%;
+  background: white;
+  border: 2px solid whitesmoke;
+  color: #777;
+}
+
+.outlay-details__container {
+  padding: 5% 0;
+  width: 100%;
+}
+
+.outlay__details--button {
+  float: right;
+  border-radius: 100%;
+  background: rgba(169, 169, 169, 0.84);
+  border: 2px solid whitesmoke;
+  color: whitesmoke;
+}
+
+.outlay__details--button:hover {
+  background: rgba(169, 169, 169, 0.57);
+}
