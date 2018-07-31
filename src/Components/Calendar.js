@@ -46,26 +46,32 @@ const Calendar = ({ year, children = () => {} }) => {
 
   return (
     <div>
-      {pipe( ///perepysaty cheres compose
+
+      {compose(
+          map(monthInterval => (
+              (findIndex(outlay =>
+                  isWithinInterval(prop("date", outlay), monthInterval))(children().props.outlays)===-1) ?
+
+                  (indexOf(monthInterval)(monthsOfYear) !== 0 &&
+                      findIndex(outlay =>
+                          isWithinInterval(prop("date", outlay),
+                              monthsOfYear[indexOf(monthInterval)(monthsOfYear)-1]))
+                      (children().props.outlays)===-1) ?
+
+                      "" :
+
+                      <EmptyMonthsSign /> :
+                  <div>
+                      <h3>{format(monthInterval.start, "MMM")} {getAmountByMonth(monthInterval.start)(children().props.outlays)}$</h3>
+                      {eachWeekOfInterval(monthInterval)
+                          .map(start => ({ start, end: endOfWeek(start) }))
+                          .map(weekInterval => <div>{eachDayOfInterval(weekInterval).map(day =>  children(day))}</div>)}
+                  </div>
+          )),
+          reverse(),
         filter(({ start }) => start - new Date() < 0),
-        reverse(),
-        map(montInterval => (
-            (findIndex(outlay =>
-                isWithinInterval(prop("date", outlay), montInterval))(children().props.outlays)===-1) ?
-                (indexOf(montInterval)(monthsOfYear) !== 0 &&
-                    findIndex(outlay =>
-                    isWithinInterval(prop("date", outlay),
-                        monthsOfYear[indexOf(montInterval)(monthsOfYear)-1]))
-                (children().props.outlays)===-1) ?
-                "" :
-                    <EmptyMonthsSign /> :
-          <div>
-            <h3>{format(montInterval.start, "MMM")}</h3>
-            {eachWeekOfInterval(montInterval)
-              .map(start => ({ start, end: endOfWeek(start) }))
-              .map(weekInterval => <div>{eachDayOfInterval(weekInterval).map(day =>  children(day))}</div>)}
-          </div>
-        )))(monthsOfYear)
+
+        )(monthsOfYear)
 
       }
     </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import {format, isSameDay} from "date-fns"
 import "../css/day.css"
+
 import {sum} from "ramda";
 export const Day = ({ day, outlays }) => {
     const outlaysOfDay = outlays.filter(({ date }) => isSameDay(date, day))

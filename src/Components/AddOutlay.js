@@ -4,6 +4,8 @@ import { addOutlay } from "../actions"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 
+import '../css/addOutlay.css'
+
 export const AddOutlay = ({ dispatch }) => {
   let title, amount, date
   return (

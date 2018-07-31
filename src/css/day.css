@@ -54,3 +54,16 @@
   border: 2px solid whitesmoke;
   color: #777;
 }
+
+.day {
+  width: 5rem;
+  height: 5rem;
+  display: inline-block;
+  color: #c1c1c1;
+  position: relative;
+
+}
+
+.day--active {
+  color: #000;
+}

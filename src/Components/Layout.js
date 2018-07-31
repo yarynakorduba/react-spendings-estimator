@@ -7,7 +7,9 @@ import { getOutlays, getIsFetching } from "../reducers"
 import { isSameYear } from "date-fns"
 import { groupWith, compose, sort, map, head, sum } from "ramda"
 import {Day} from "./Day"
+import {getAmountByYear, getTotalAmount} from "./GetAmountOfMoney";
 
+import "../css/outlay.css"
 
 
 class Layout extends React.Component {
@@ -32,14 +34,16 @@ class Layout extends React.Component {
       sort((a, b) => a.date < b.date)
     )(outlays)
 
-    return years.map(year => (
+    return <Fragment><br/><div>Total amount: {getTotalAmount(outlays)}$</div>
+
+      {years.map(year => (
       <Fragment>
-        <h2>{year}</h2>
+        <h2>{year} {getAmountByYear(new Date(year, 1, 1))(outlays)}$</h2>
         <Calendar year={year} outlays={outlays} onOutlayClick={deleteOutlay} onAdd={addOutlay}>
           {day => <Day day={day} outlays={outlays} />}
         </Calendar>
       </Fragment>
-    ))
+    ))}</Fragment>
   }
 }
 

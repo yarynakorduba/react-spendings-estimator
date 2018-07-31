@@ -1,0 +1,5 @@
+.month{}
+
+.month--separator {
+    fill: rgba(153, 153, 153, 0.52);
+}

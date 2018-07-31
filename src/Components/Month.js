@@ -3,6 +3,9 @@ import { format, startOfMonth, getDay } from "date-fns"
 import { times } from "ramda"
 import { v4 } from "react-native-uuid"
 
+import "../css/month.css"
+
+
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
 export const Month = ({ date, titleLabel, children }) => {

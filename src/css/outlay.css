@@ -1,0 +1,33 @@
+.outlay {
+    position: absolute;
+    background: rgba(122, 191, 8, 0.74);
+    border-radius: 100%;
+    width: fit-content;
+    width: 1.1rem;
+    font-family: Pt Mono, monospace;
+    font-size: 10px;
+    padding: 0.6rem;
+    line-height: 1rem;
+    top: -0.3rem;
+    left: -0.6rem;
+}
+.outlay:after {
+    content: "$";
+}
+
+.outlay-details {
+    padding: 5% 0;
+    width: 100%;
+}
+
+.outlay-details__delete-button {
+    float: right;
+    border-radius: 100%;
+    background: rgba(169, 169, 169, 0.84);
+    border: 2px solid whitesmoke;
+    color: whitesmoke;
+}
+
+.outlay-details__delete-button:hover {
+    background: rgba(169, 169, 169, 0.57);
+}

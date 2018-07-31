@@ -3,97 +3,12 @@
 }
 
 input:focus {
-  border-color: #777;
-  box-shadow: 0 1px 0px #999 inset, 0 0 4px #999;
-
-}
-.outlay {
-  position: absolute;
-  background: rgba(122, 191, 8, 0.74);
-  border-radius: 100%;
-  width: fit-content;
-  width: 1.1rem;
-  font-family: Pt Mono, monospace;
-  font-size: 10px;
-  padding: 0.6rem;
-  line-height: 1rem;
-  top: -0.3rem;
-  left: -0.6rem;
-}
-.outlay:after {
-  content: "$";
-}
-.day {
-  width: 5rem;
-  height: 5rem;
-  display: inline-block;
-  color: #ccc;
-  position: relative;
+  border-color: #cfee91;
+  box-shadow: 0 1px 0px #b7d280 inset, 0 0 7px #acc678;
 
 }
 
-.day--active {
-  color: #000;
-}
-
-.outlay--list {
+.estimator {
   text-align: center;
   padding: 2%;
-}
-
-.add-outlay__input {
-  font-size: 1rem;
-  font-family: "Courier New";
-  height: 25px;
-  margin: auto;
-  border: solid 1px #ccc;
-  border-radius: 10px;
-}
-
-.add-outlay__input:last-child {
-  border-top-right-radius: 20%;
-  border-bottom-right-radius: 20%;
-  background: rgba(19, 65, 191, 0.65);
-  color: white;
-}
-
-.add-outlay__button {
-  height: 2rem;
-  width: 2rem;
-  padding: 0.5rem;
-  border-bottom-right-radius: 15%;
-  border-top-right-radius: 15%;
-  border: solid 1px #ccc;
-  border-radius: 100%;
-  background: rgba(153, 153, 153, 0.77);
-}
-
-.month__weekdays {
-  float: left;
-  width: 13%;
-  margin: 0.5%;
-  color: #777;
-  font-size: 11px;
-  text-align: center;
-}
-
-.month--separator {
-  fill: #999;
-}
-
-.outlay-details {
-  padding: 5% 0;
-  width: 100%;
-}
-
-.outlay-details__delete-button {
-  float: right;
-  border-radius: 100%;
-  background: rgba(169, 169, 169, 0.84);
-  border: 2px solid whitesmoke;
-  color: whitesmoke;
-}
-
-.outlay-details__delete-button:hover {
-  background: rgba(169, 169, 169, 0.57);
 }

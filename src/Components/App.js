@@ -4,10 +4,11 @@ import Layout from "./Layout"
 import PropTypes from "prop-types"
 
 import "../css/heading.css"
+import "../css/calendar.css"
 
 const App = () => (
-  <div className="outlay--list">
-    <h1 className="heading--large">My Cost App</h1>
+  <div className="estimator">
+    <h1 className="heading--large">Outlays Estimator</h1>
     <AddOutlay />
     <Layout />
   </div>

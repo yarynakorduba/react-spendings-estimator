@@ -1,0 +1,30 @@
+.add-outlay
+{}
+
+
+.add-outlay__input {
+    font-size: 1rem;
+    font-family: "Courier New";
+    height: 25px;
+    margin: auto;
+    border: solid 1px #97cba9;
+    border-radius: 10px;
+}
+
+.add-outlay__input:last-child {
+    border-top-right-radius: 20%;
+    border-bottom-right-radius: 20%;
+    background: rgba(19, 65, 191, 0.65);
+    color: white;
+}
+
+.add-outlay__button {
+    height: 2rem;
+    width: 2rem;
+    border: solid 1px #ccc;
+    border-radius: 100%;
+    background: #092a35;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
