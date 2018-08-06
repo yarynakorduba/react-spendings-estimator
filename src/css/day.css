@@ -1,17 +1,11 @@
-.day__items {
-  padding: 2%;
-  position: absolute;
-  background: white;
-  border-radius: 2%;
-  box-shadow: #777777 0 0 7px;
-  max-width: 300px;
-}
-.day__items--invisible {
-  display: none;
-}
+.day {
+    width: 5rem;
+    height: 5rem;
+    display: inline-block;
+    color: #c1c1c1;
+    position: relative;
+    font-family: PT Sans, sans-serif;
 
-.day__items--visible {
-  display: block;
 }
 
 .day__heading {
@@ -22,48 +16,42 @@
   padding: 3%;
   min-width: 33%;
   font-size: smaller;
-
   border-bottom: 1px solid transparent;
 }
 
-.day__heading--costless {
-  border-color: transparent;
-  color: #ccc;
-}
-
-.day__heading--minimal {
-  border-color: #74c77d;
-}
-
-.day__heading--average {
-  border-color: #64ab71;
-}
-
-.day__heading--high {
-    border-color: #048a39;
-}
-
-.day__heading--very-high {
-    border-color:#09632c;
-}
-
-.day__items--toggler {
-  float: right;
-  margin-top: -2%;
-  background: white;
-  border: 2px solid whitesmoke;
-  color: #777;
-}
-
-.day {
-  width: 5rem;
-  height: 5rem;
-  display: inline-block;
-  color: #c1c1c1;
-  position: relative;
-
-}
 
 .day--active {
   color: #000;
 }
+
+.day__money-amount {
+    position: absolute;
+    z-index: 1;
+    background: rgb(123, 190, 7);
+
+    border-radius: 100%;
+    width: 1.1rem;
+    font-family: Pt Mono, monospace;
+    font-size: 10px;
+    padding: 0.6rem;
+    line-height: 1rem;
+    top: -0.3rem;
+    left: -0.6rem;
+}
+.day__money-amount:after {
+    content: "$";
+}
+
+.day__money-amount--top {
+    z-index: 11;
+    background: rgb(142, 219, 8);
+
+}
+
+.day__money-amount:hover {
+    background: rgb(142, 219, 8);
+}
+
+
+
+

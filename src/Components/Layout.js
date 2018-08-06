@@ -5,11 +5,10 @@ import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { getOutlays, getIsFetching } from "../reducers"
 import { isSameYear } from "date-fns"
-import { groupWith, compose, sort, map, head, sum } from "ramda"
-import {Day} from "./Day"
+import { groupWith, compose, sort, map, head } from "ramda"
+import Day from "./Day"
 import {getAmountByYear, getTotalAmount} from "./GetAmountOfMoney";
-
-import "../css/outlay.css"
+import {v4} from 'react-native-uuid'
 
 
 class Layout extends React.Component {
@@ -34,13 +33,15 @@ class Layout extends React.Component {
       sort((a, b) => a.date < b.date)
     )(outlays)
 
-    return <Fragment><br/><div>Total amount: {getTotalAmount(outlays)}$</div>
+      console.log(this.props.deleteOutlay);
+    return <Fragment key={v4()}><br/><h2 className="estimator__money-amount">Total amount: {getTotalAmount(outlays)}$</h2>
 
       {years.map(year => (
-      <Fragment>
-        <h2>{year} {getAmountByYear(new Date(year, 1, 1))(outlays)}$</h2>
-        <Calendar year={year} outlays={outlays} onOutlayClick={deleteOutlay} onAdd={addOutlay}>
-          {day => <Day day={day} outlays={outlays} />}
+      <Fragment key={v4()}>
+        <h2>{year} <span className="year__money-amount">{getAmountByYear(new Date(year, 1, 1))(outlays)}$</span></h2>
+
+          <Calendar key={v4()} year={year} outlays={outlays} onOutlayClick={deleteOutlay} onAdd={addOutlay}>
+          {day => <Day key={v4()} day={day} outlays={outlays} onOutlayClick={deleteOutlay}/>}
         </Calendar>
       </Fragment>
     ))}</Fragment>
@@ -57,7 +58,7 @@ Layout.propTypes = {
 
 const mapStateToProps = state => ({
   outlays: getOutlays(state),
-  isFetching: getIsFetching(state)
+  isFetching: getIsFetching(state),
 })
 
 Layout = connect(mapStateToProps, actions)(Layout)

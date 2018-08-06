@@ -1,30 +1,25 @@
-import React from "react"
-import { format, startOfMonth, getDay } from "date-fns"
-import { times } from "ramda"
+import React, { Fragment } from "react"
+import { format, eachDayOfInterval, endOfWeek, eachWeekOfInterval } from "date-fns"
 import { v4 } from "react-native-uuid"
 
 import "../css/month.css"
 
+import { getAmountByMonth } from "./GetAmountOfMoney"
 
-const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-
-export const Month = ({ date, titleLabel, children }) => {
-  const weekDay = getDay(startOfMonth(date)) % 6
-  let startMargin = times(() => <span className="calendar__day" key={v4()} />, weekDay)
-
+export const Month = ({ monthInterval, outlays, days }) => {
   return (
-    <div className="calendar__month">
-      <div className="heading--small">
-        {format(date, "MMMM")}&nbsp;
-        {titleLabel}$
-      </div>
-      {WEEKDAYS.map(day => (
-        <span key={v4()} className="month__weekdays">
-          {day}
-        </span>
-      ))}
-      {startMargin}
-      {children}
-    </div>
+    <Fragment>
+      <h3 key={v4()}>
+        {format(monthInterval.start, "MMM")}{" "}
+        <span className="month__money-amount">{getAmountByMonth(monthInterval.start)(outlays)}$</span>
+      </h3>
+      {eachWeekOfInterval(monthInterval)
+        .map(start => ({ start, end: endOfWeek(start) }))
+        .map(weekInterval => (
+          <div key={v4()}>
+            {eachDayOfInterval(weekInterval).map(day => <Fragment key={v4()}>{days(day)}</Fragment>)}
+          </div>
+        ))}
+    </Fragment>
   )
 }

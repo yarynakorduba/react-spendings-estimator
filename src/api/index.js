@@ -42,7 +42,6 @@ export const addOutlay = (title, amount, date) => {
 }
 
 export const deleteOutlay = id => {
-  console.log("ID", id)
   return base
     .ref(`/outlays/${id}`)
     .set(null)

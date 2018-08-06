@@ -1,0 +1,14 @@
+.estimator {
+  text-align: center;
+  padding: 2%;
+}
+
+
+.estimator__heading {
+  font-family: Pt Serif, serif;
+}
+
+.estimator__money-amount {
+  color: #999;
+}
+

@@ -28,6 +28,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "css-loader": "^0.28.10",
+    "file-loader": "^1.1.11",
     "prettier": "^1.13.7",
     "prop-types": "^15.6.2",
     "re-base": "^3.2.3",

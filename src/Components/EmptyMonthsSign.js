@@ -1,9 +1,9 @@
 import React from "react"
 
-
 export const EmptyMonthsSign = () => (
-    <svg className="month--separator" height="12" width="265">
-        <path d="M 0 7
+  <svg className="month--separator" height="12" width="265">
+    <path
+      d="M 0 7
            C 0 6 15 10 20 0
            C 20 6 35 10 40 0
            C 40 6 55 10 60 0
@@ -19,6 +19,7 @@ export const EmptyMonthsSign = () => (
            C 240 6 255 10 260 0
            C 260 6 275 10 265 7
 
-           Z"/>
-    </svg>
-);
+           Z"
+    />
+  </svg>
+)

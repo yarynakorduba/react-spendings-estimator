@@ -1,24 +1,8 @@
-.estimator {
-
-}
-
-.calendar__year {
+.year {
     text-align: left;
     margin: 3% 7%;
 }
 
-.calendar__month {
-    width: 100%;
-    margin: 0 0% 1% 0.8%;
-    padding-bottom: 1%;
-    padding-left: 0.2%;
-    display: inline-table;
-}
-.calendar__day {
-    font-family: PT Sans, sans-serif;
-    margin: 0.5% 0% 0.5% 1%;
-    text-align: left;
-    float: left;
-    min-width: 13%;
-    width: fit-content;
+.year__money-amount {
+    color: #999;
 }

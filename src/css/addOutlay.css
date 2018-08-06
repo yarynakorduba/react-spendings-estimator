@@ -28,3 +28,13 @@
     font-weight: bold;
     font-size: 1rem;
 }
+
+*:focus {
+    outline: none;
+}
+
+input:focus {
+    border-color: #cfee91;
+    box-shadow: 0 1px 0px #b7d280 inset, 0 0 7px #acc678;
+
+}

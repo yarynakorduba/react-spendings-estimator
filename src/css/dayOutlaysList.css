@@ -1,0 +1,28 @@
+.outlays {
+    padding: 12%;
+    position: absolute;
+    background: white;
+    border-radius: 2%;
+    box-shadow: #777777 0 0 7px;
+    max-width: 300px;
+    width: max-content;
+    z-index: 10;
+    left: 0.5rem;
+    display: none;
+}
+
+.outlays--visible {
+    display: block;
+}
+.outlays__close-button {
+    width: 1.5rem;
+    margin: auto;
+}
+.outlays__close-button img {
+    width: 100%;
+    opacity: 0.7;
+}
+
+.outlays__close-button img:hover {
+    opacity: 1;
+}

@@ -4,13 +4,14 @@ import { addOutlay } from "../actions"
 import PropTypes from "prop-types"
 import { connect } from "react-redux"
 
-import '../css/addOutlay.css'
+import "../css/addOutlay.css"
 
 export const AddOutlay = ({ dispatch }) => {
   let title, amount, date
   return (
     <Fragment>
-      <form className="add-outlay"
+      <form
+        className="add-outlay"
         onSubmit={ev => {
           ev.preventDefault()
           dispatch(addOutlay(title.value, amount.value, date.value))
@@ -30,6 +31,7 @@ export const AddOutlay = ({ dispatch }) => {
           ref={node => {
             title = node
           }}
+          maxLength="40"
         />
         <input
           className="add-outlay__input"

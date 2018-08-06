@@ -1,5 +1,26 @@
-.month{}
+.month {
+    width: 100%;
+    margin: 0 0% 1% 0.8%;
+    padding-bottom: 1%;
+    padding-left: 0.2%;
+    display: inline-table;
+}
+
+.month__money-amount {
+    color: #999;
+}
 
 .month--separator {
     fill: rgba(153, 153, 153, 0.52);
+}
+
+.month__heading {
+    font-family: Pt Serif, serif;
+    height: fit-content;
+    text-align: center;
+    display: block;
+    margin: 5% 5% 1% 5%;
+    padding-top: 1%;
+    font-weight: bold;
+    min-width: 33%;
 }

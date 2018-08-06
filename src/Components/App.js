@@ -3,12 +3,11 @@ import AddOutlay from "./AddOutlay"
 import Layout from "./Layout"
 import PropTypes from "prop-types"
 
-import "../css/heading.css"
-import "../css/calendar.css"
+import "../css/estimator.css"
 
 const App = () => (
   <div className="estimator">
-    <h1 className="heading--large">Outlays Estimator</h1>
+    <h1 className="estimator__heading">Outlays Estimator</h1>
     <AddOutlay />
     <Layout />
   </div>
