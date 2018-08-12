@@ -7,6 +7,7 @@ import { isWithinInterval, endOfMonth } from "date-fns"
 import { Month } from "./Month"
 
 import "../css/calendar.css"
+import { getAmountByMonth } from "./GetAmountOfMoney"
 
 const Calendar = ({ year, onOutlayClick, children = () => {} }) => {
   const monthsOfYear = times(month => {
@@ -21,7 +22,6 @@ const Calendar = ({ year, onOutlayClick, children = () => {} }) => {
   return compose(
     map(
       monthInterval =>
-        console.log(monthInterval) ||
         findIndex(outlay => isWithinInterval(prop("date", outlay), monthInterval))(outlays) === -1 ? (
           indexOf(monthInterval)(monthsOfYear) !== 0 &&
           findIndex(outlay =>
@@ -32,7 +32,7 @@ const Calendar = ({ year, onOutlayClick, children = () => {} }) => {
             <EmptyMonthsSign key={v4()} />
           )
         ) : (
-          <Month key={v4()} outlays={outlays} monthInterval={monthInterval} days={children} />
+          <Month key={v4()} title={getAmountByMonth(monthInterval.start)(outlays) + "$"} monthInterval={monthInterval}>{children}</Month>
         )
     ),
     reverse(),
